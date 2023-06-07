@@ -1,0 +1,178 @@
+   <Method Name="PlaceBet">
+    <Params>
+      <Token Type="string" Value="682b09ce9b759ad70801856db7659bed" />
+      <TransactionID Type="int" Value="486271111183" />
+      <BetAmount Type="int" Value="4000" />
+      <BetReferenceNum Type="string" Value="72186" />
+      <GameReference Type="string" Value="BIA_SPORTSBOOK" />
+      <BetMode Type="string" Value="PreLive" />
+      <Description Type="string" Value="PreLive bet (Combinations)" />
+      <ExternalUserID Type="string" Value="9729974" />
+      <FrontendType Type="int" Value="1" />
+      <BetStatus Type="string" Value="C" />
+      <SportIDs Type="string" Value="1" />
+      <ClientIP Type="string" Value="83.103.143.62" />
+      <Bet>
+        <IsSystem Type="bool" Value="true" />
+        <EventCount Type="int" Value="6" />
+        <BankerCount Type="int" Value="0" />
+        <Events Type="string" Value="Mohun Bagan AC vs. Shillong Lajong FC: Match Bet : 1;Dibba AL Fujairah vs. Sharjah FC: Match Bet : X,Draw No Bet : 1;Ajman Club vs. AL Ain FC: Totals : over 2.5;FC Pune City vs. Bengaluru FC: Totals : under 2.5;Wadi Degla SC vs. Al-Mokawloon Al-Arab: Match Bet : 2;AS Saint Etienne vs. AS Monaco: Totals : under 2.5,Match Bet : 1;" />
+        <EventList>
+          <Event Type="string" Value="Mohun Bagan AC vs. Shillong Lajong FC">
+            <EventID Type="int" Value="6335069" />
+            <SportID Type="int" Value="1" />
+            <ExtEventID Type="int" Value="13138146" />
+            <EventDate Type="string" Value="2017-12-14 12:00" />
+            <Market Type="string" Value="Match Bet">
+              <MarketID Type="string" Value="1" />
+              <ExtType Type="string" Value="10/1/*/1" />
+              <Outcome Type="string" Value="1" />
+              <Odds Type="double" Value="1.240" />
+            </Market>
+          </Event>
+          <Event Type="string" Value="Dibba AL Fujairah vs. Sharjah FC">
+            <EventID Type="int" Value="6275806" />
+            <SportID Type="int" Value="1" />
+            <ExtEventID Type="int" Value="12358652" />
+            <EventDate Type="string" Value="2017-12-14 12:40" />
+            <Market Type="string" Value="Match Bet">
+              <MarketID Type="string" Value="1" />
+              <ExtType Type="string" Value="10/1/*/X" />
+              <Outcome Type="string" Value="X" />
+              <Odds Type="double" Value="3.430" />
+            </Market>
+            <Market Type="string" Value="Draw No Bet">
+              <MarketID Type="string" Value="38" />
+              <ExtType Type="string" Value="47/1/*/1" />
+              <Outcome Type="string" Value="1" />
+              <Odds Type="double" Value="1.720" />
+            </Market>
+          </Event>
+          <Event Type="string" Value="Ajman Club vs. AL Ain FC">
+            <EventID Type="int" Value="6275808" />
+            <SportID Type="int" Value="1" />
+            <ExtEventID Type="int" Value="12358572" />
+            <EventDate Type="string" Value="2017-12-14 12:45" />
+            <Market Type="string" Value="Totals">
+              <MarketID Type="string" Value="5" />
+              <ExtType Type="string" Value="56/1/2.5/OVER" />
+              <Outcome Type="string" Value="Over 2.5" />
+              <Odds Type="double" Value="1.600" />
+            </Market>
+          </Event>
+          <Event Type="string" Value="FC Pune City vs. Bengaluru FC">
+            <EventID Type="int" Value="6275961" />
+            <SportID Type="int" Value="1" />
+            <ExtEventID Type="int" Value="12684312" />
+            <EventDate Type="string" Value="2017-12-14 14:30" />
+            <Market Type="string" Value="Totals">
+              <MarketID Type="string" Value="5" />
+              <ExtType Type="string" Value="56/1/2.5/UNDER" />
+              <Outcome Type="string" Value="Under 2.5" />
+              <Odds Type="double" Value="2.340" />
+            </Market>
+          </Event>
+          <Event Type="string" Value="Wadi Degla SC vs. Al-Mokawloon Al-Arab">
+            <EventID Type="int" Value="6317334" />
+            <SportID Type="int" Value="1" />
+            <ExtEventID Type="int" Value="13126950" />
+            <EventDate Type="string" Value="2017-12-14 15:00" />
+            <Market Type="string" Value="Match Bet">
+              <MarketID Type="string" Value="1" />
+              <ExtType Type="string" Value="10/1/*/2" />
+              <Outcome Type="string" Value="2" />
+              <Odds Type="double" Value="1.700" />
+            </Market>
+          </Event>
+          <Event Type="string" Value="AS Saint Etienne vs. AS Monaco">
+            <EventID Type="int" Value="6285434" />
+            <SportID Type="int" Value="1" />
+            <ExtEventID Type="int" Value="11833398" />
+            <EventDate Type="string" Value="2017-12-15 19:45" />
+            <Market Type="string" Value="Totals">
+              <MarketID Type="string" Value="5" />
+              <ExtType Type="string" Value="56/1/2.5/UNDER" />
+              <Outcome Type="string" Value="Under 2.5" />
+              <Odds Type="double" Value="1.910" />
+            </Market>
+            <Market Type="string" Value="Match Bet">
+              <MarketID Type="string" Value="1" />
+              <ExtType Type="string" Value="10/1/*/1" />
+              <Outcome Type="string" Value="1" />
+              <Odds Type="double" Value="3.720" />
+            </Market>
+          </Event>
+        </EventList>
+        <BetStake Type="int" Value="1000">
+          <CombLength Type="int" Value="6" />
+          <Winnings Type="int" Value="100703" />
+          <MultipleBonus Type="int" Value="0" />
+          <Odds Type="double" Value="51.705" />
+          <Odds Type="double" Value="25.928" />
+          <Odds Type="double" Value="100.703" />
+          <Odds Type="double" Value="50.498" />
+        </BetStake>
+      </Bet>
+      <SiteId Type="string" Value="486271" />
+    </Params>
+   </Method>
+
+
+  <PKT>
+       <Method Name="PlaceBet">
+           <Auth Login="" Password="" />
+           <Params>
+               <Token Type="string" Value="b14784505fb52e4361c7f58e6ea20b25" />
+               <TransactionID Type="int" Value="486271112831" />
+               <BetAmount Type="int" Value="100" />
+               <BetReferenceNum Type="string" Value="72685" />
+               <GameReference Type="string" Value="BIA_SPORTSBOOK" />
+               <BetMode Type="string" Value="PreLive" />
+               <Description Type="string" Value="PreLive bet (Multiple)" />
+               <ExternalUserID Type="string" Value="3829211" />
+               <FrontendType Type="int" Value="1" />
+               <BetStatus Type="string" Value="C" />
+               <SportIDs Type="string" Value="1" />
+               <ClientIP Type="string" Value="83.103.143.62" />
+               <Bet>
+                   <IsSystem Type="bool" Value="false" />
+                   <EventCount Type="int" Value="2" />
+                   <BankerCount Type="int" Value="0" />
+                   <Events Type="string" Value="Atletico De Kolkata vs. FC Goa: Match Bet : 1;AL Ittifaq vs. AL Tai: Match Bet : 1;" />
+                   <EventList>
+                       <Event Type="string" Value="Atletico De Kolkata vs. FC Goa">
+                           <EventID Type="int" Value="6331612" />
+                           <SportID Type="int" Value="1" />
+                           <ExtEventID Type="int" Value="12684340" />
+                           <EventDate Type="string" Value="2018-01-03 14:30" />
+                           <Market Type="string" Value="Match Bet">
+                               <MarketID Type="string" Value="1" />
+                               <ExtType Type="string" Value="10/1/*/1" />
+                               <Outcome Type="string" Value="1" />
+                               <Odds Type="double" Value="2.280" />
+                           </Market>
+                       </Event>
+                       <Event Type="string" Value="AL Ittifaq vs. AL Tai">
+                           <EventID Type="int" Value="6398177" />
+                           <SportID Type="int" Value="1" />
+                           <ExtEventID Type="int" Value="13443625" />
+                           <EventDate Type="string" Value="2018-01-03 14:40" />
+                           <Market Type="string" Value="Match Bet">
+                               <MarketID Type="string" Value="1" />
+                               <ExtType Type="string" Value="10/1/*/1" />
+                               <Outcome Type="string" Value="1" />
+                               <Odds Type="double" Value="1.710" />
+                           </Market>
+                       </Event>
+                   </EventList>
+                   <BetStake Type="int" Value="100">
+                       <CombLength Type="int" Value="2" />
+                       <Winnings Type="int" Value="390" />
+                       <MultipleBonus Type="int" Value="0" />
+                       <Odds Type="double" Value="3.899" />
+                   </BetStake>
+               </Bet>
+               <SiteId Type="string" Value="486271" />
+           </Params>
+       </Method>
+   </PKT>

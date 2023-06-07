@@ -1,0 +1,51 @@
+<?php 
+   include_once 'JurisdictionsList.class.inc';
+   $checkactivity=check_access('ttm_activity_result',$redirect=false);
+   $checklist=check_access('ttm_totem_list',$redirect=false);
+   $checktranstrack=check_access('ttm_totem_dayly_transtrack');
+   $sql = "Select jur_name , jur_class, jur_available_credit from jurisdiction where jur_id = " . $_REQUEST['jurid'];
+   $rs = $dbh->queryRow($sql);
+   
+   $jur_id = $_REQUEST['jurid'];
+   $jur_name = $rs['jur_name'];
+   $jur_class = $rs['jur_class'];
+   $jur_credit = $rs['jur_available_credit'];
+   
+ ?>
+     
+<script>
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+	$(document).ready(function(){
+		<?if($checkactivity==true){ ?>
+		$('#tabs-1').load('totem/totem_financial_detail_monthly.inc',{jurid:<?=$jur_id?>,jurclass:'<?=$jur_class?>'});
+		<?}if($checklist==true){?>
+		$('#tabs-2').load('totem/totem_financial_detail_totemlist.inc',{jurid:<?=$jur_id?>,jurclass:'<?=$jur_class?>'});
+		<?}?>
+		$('#tabs-3').load('totem/totem_financial_detail_clublist.inc',{jurid:<?=$jur_id?>,jurclass:'<?=$jur_class?>'});
+		$('#totemnr').load('totem/totem_query_service.inc',{action:'4',jurid:<?=$jur_id?>,jurclass:'<?=$jur_class?>'});		
+	});
+</script>
+
+<div class="demo" style="margin-top:20px;">
+<h2><?=strtoupper($jur_class)?>: <span class="<?=$jur_class?>"><?=strtoupper($jur_name)?> </span>-  &nbsp; CREDITO: <span class="<?=$jur_class?>"> <?=getInDollars($jur_credit)?></span><?if($checklist==true){ ?> <span id="totemnr"></span><?}?> </h2>
+<div style="margin-top:30px">
+<div id="tabs">
+	<ul>
+	<?if($checkactivity==true){ ?>	<li><a href="#tabs-1">Totem Activity Result</a></li>
+	<?}if($checklist==true){?><li><a href="#tabs-2">Totem List</a></li>
+	<?}if($checktranstrack==true){?><li><a href="#tabs-3">Totem Financial</a></li><?}?>
+	</ul>
+	<?if($checkactivity==true){ ?>	<div id="tabs-1"></div>
+	<?}if($checklist==true){?><div id="tabs-2"></div>	
+	<?}if($checktranstrack==true){?><div id="tabs-3"></div><?}?>
+</div>
+</div>
+<div style="display: none" id="resetClub" title="Reset all totems?">
+    		<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>You are attempting to reset all the totems under this club.Are you sure?</p>
+</div>
+<div style="display: none;" class="demo-description">
+<p>Click tabs to swap between content that is broken into logical sections.</p>
+</div><!-- End demo-description -->
+ </div>

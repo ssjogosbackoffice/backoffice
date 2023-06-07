@@ -1,0 +1,126 @@
+<?php
+check_access("view_customers", true);
+
+$punter_id = $_REQUEST["id"];
+settype($punter_id, "integer");
+
+$punter_data = getPunter($punter_id, $is_customer_num=false, $include_internet_users = false);
+
+if(empty($punter_data)){
+  dieWithError("Punter not found");
+}
+
+$yesterday = date("Y-m-d", strtotime("yesterday"));
+$today     = date("Y-m-d", strtotime("today"));
+
+//Customer result rake
+$sql = "SELECT SUM(cus_res_rake) AS rake FROM customer_result_daily WHERE cus_res_pun_id = $punter_id AND cus_res_day <= TO_DATE('$yesterday 23:59:59', 'YYYY-MM-DD HH24:MI:SS')";
+$rs = $dbh->exec($sql);
+if(!$rs->hasNext()){
+  dieWithError("Punter not found (1)");
+}
+
+$row = $rs->next();
+$cus_res_rake = $row["rake"];
+//end - Customer result rake
+
+$sql = "SELECT SUM(pre_rake) AS rake FROM punter_result JOIN result ON res_id = pre_res_id WHERE pre_pun_id = $punter_id AND res_date BETWEEN TO_DATE('$today 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE('$today 23:59:59', 'YYYY-MM-DD HH24:MI:SS')";
+$rs = $dbh->exec($sql);
+if(!$rs->hasNext()){
+  dieWithError("Punter not found (2)");
+}
+$row = $rs->next();
+$pre_rake = $row["rake"];
+
+$punter_data["total_rake"] = $cus_res_rake + $pre_rake;
+
+$sql = "SELECT SUM(ctr_amount) AS ctr_amount FROM customer_transaction WHERE ctr_tty_id = 6 AND ctr_pun_id = $punter_id";
+$rs = $dbh->exec($sql);
+if(!$rs->hasNext()){
+  dieWithError("Punter not found (3)");
+}
+$row = $rs->next();
+$punter_data["total_refunds"]  = $row["ctr_amount"];
+
+$sql = "SELECT SUM(tnt_buyin) AS tnt_buyin, SUM(tnt_fee) AS tnt_fee, SUM(tnt_wins) AS tnt_wins FROM tournament_entries WHERE tnt_punid = $punter_id";
+$rs  = $dbh->exec($sql);
+if(!$rs->hasNext()){
+  dieWithError("Punter not found (4)");
+}
+$row = $rs->next();
+
+
+$punter_data["tourney_buyin"] = $row["tnt_buyin"];
+$punter_data["tourney_fee"]   = $row["tnt_fee"];
+$punter_data["tourney_wins"]  = $row["tnt_wins"];
+
+
+
+?>
+
+<head> 
+  <title><?=$title?></title>
+  <link rel="stylesheet" type="text/css" href="<?= secure_host ?>/media/style.css" title="core_style" />
+  <script src="<?= secure_host ?>/media/jfunctions.js" type="text/javascript"></script>
+  <script src="<?= secure_host ?>/media/stm31.js" type="text/javascript"></script>
+</head>
+<body>
+  <table cellpadding="4" cellspacing="1"  border="0" width="100%">
+    <tr>
+      <td class="label" colspan="4">Player Info</th>
+    </tr>
+    <tr>
+      <td><b>ID</b></th>
+      <td><?=$punter_data["customer_number"]?></td>
+      <td><b>Username</b></th>
+      <td><?=$punter_data["username"]?></td>
+    </tr>
+    <tr>
+      <td><b>Register date</b></th>
+      <td><?=$punter_data["reg_date"]?></td>
+      <td><b>Credits</b></th>
+      <td><?=getInDollars($punter_data["credits"])?></td>
+    </tr>
+    <tr>
+      <td class="label" colspan="4">Balance</th>
+    </tr>
+    <tr>
+      <td class="label">Tot. Buy</th>
+      <td><?=getInDollars($punter_data["total_deposits"])?></td>
+      <td class="label">Tot. Buy Torney</th>
+      <td><?=getInDollars($punter_data["tourney_buyin"] + $punter_data["tourney_fee"])?></td>
+    </tr>
+    <tr>
+      <td class="label">Tot. Sell</th>
+      <td><?=getInDollars($punter_data["total_withdrawals"])?></td>
+      <td class="label">Tot. Win/Loss Tornei Gross</th>
+      <td><?=getInDollars($punter_data["tourney_wins"] - $punter_data["tourney_buyin"])?></td>
+    </tr>
+    <tr>
+      <td class="label">Diff +/-</th>
+      <td><?=getInDollars($punter_data["total_deposits"] - $punter_data["total_withdrawals"])?></td>
+      <td class="label">Tot. Win/Loss Tornei Net</th>
+      <td><?=getInDollars($punter_data["tourney_wins"] - $punter_data["tourney_buyin"] - $punter_data["tourney_fee"])?></td>
+    </tr>
+    <tr>
+      <td class="label">Tot. Win o Loss Net</th>
+      <td><?=getInDollars($punter_data["tourney_wins"] - $punter_data["total_bets"])?></td>
+      <td class="label">Tot. Rake Tourney</th>
+      <td><?=getInDollars($punter_data["tourney_fee"])?></td>
+    </tr>
+    <tr>
+      <td class="label">Tot. Rake</th>
+      <td><?=getInDollars(-$punter_data["total_rake"])?></td>
+      <td class="label">Rimborsi</th>
+      <td><?=getInDollars($punter_data["total_refunds"])?></td>
+    </tr>
+    <tr>
+      <td class="label">Tot. Win Loss Gross</th>
+      <td><?=getInDollars($punter_data["total_wins"] - $punter_data["total_bets"] - $punter_data["total_rake"])?></td>
+      <td class="label">Balance</th>
+      <td><?=getInDollars($punter_data["credits"])?></td>
+    </tr>
+  </table>
+  <br/>
+  <div align="center"><a style="font-size:20px" href="javascript:window.close()">Close</a></div>
+</body>

@@ -1,0 +1,11 @@
+clubid=%clubid%
+reg_addr=http://10.10.11.1/totem/Register.php
+ca_addr=http://82.57.249.212/totem/RequestCert.php
+ping_addr=http://10.10.11.1/totem/Ping.php
+update_addr=http://10.10.11.1/totem/update/version.txt
+base_app=http://10.10.11.1/totem/install/Thumper.exe
+air_app=http://10.10.11.1/totem/install/italypoker.air
+vpn_server=82.57.249.212
+vpn_port=1195
+server_addr=10.10.11.1:9600
+setup_ver=999

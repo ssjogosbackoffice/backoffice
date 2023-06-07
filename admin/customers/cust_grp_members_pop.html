@@ -1,0 +1,500 @@
+<? 
+include 'cache_file.class.inc';
+$cache_filename = "group_list.".session_id();
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<?include 'admin/javascript_css.inc' ?>
+
+<script language="JavaScript">
+
+function membersSelected(form)
+{	var elements = form.elements;
+	var numElements = elements.length;
+	var element = null;
+	var numChecked = 0;
+	
+	for  (var i=0; i<numElements; i++ )
+	{	element = elements[i];
+	
+		if ( element.type == 'checkbox' )
+			if ( element.name.substr(0, 7) == 'members')
+				if ( element.checked )
+					numChecked++;
+	}
+	
+	if ( numChecked < 1 )
+		alert("");
+		
+	return (numChecked > 0);
+}
+
+
+function membersUnselected(form)
+{	var elements = form.elements;
+	var numElements = elements.length;
+	var element = null;
+	var numUnchecked = 0;
+	
+	for  (var i=0; i<numElements; i++ )
+	{	element = elements[i];
+	
+		if ( element.type == 'checkbox' )
+			if ( ! element.checked )
+					numUnchecked++;
+	}
+	
+	if ( numUnchecked < 1 )
+		alert("");
+		
+	return (numUnchecked > 0);
+}
+
+</script>
+
+</HEAD>
+
+<BODY topmargin=0 leftmargin=2 marginwidth="0" marginheight="0">
+<?
+
+$op = getPostGetVar('op');
+
+$group_code = getPostGetVar('group_code');
+if ( !$group_code )
+	dieWithError("");
+
+
+?>
+<?
+
+ob_start(); 
+
+if ( 'add' == $op )
+{	$add_by = getPostGetVar('add_by');
+
+	if ( 'pick' == $add_by )
+	{
+?>		<div class=small><b></b></div>
+		<P>		
+<?		$members_chosen = getPostGetVar('members_chosen');
+
+		if ( $members_chosen )  
+		{	$members = $_POST['members'];
+			
+			$i=0;
+			foreach ( $members as $key => $val )
+			{	$i++;
+				$pun_id = $key;
+				if ( $members[$pun_id] )
+					if ( ! punterInGroup($group_code, $pun_id) )
+					{	addToGroup($group_code, $pun_id);
+						doAdminUserLog($_SESSION['admin_id'], "add_to_group", $group_code, $pun_id);	
+					}
+			}
+			printInfoMessage("");
+?><P><br><br><?			
+			printLink(SELF."?op=add&group_code=$group_code", "");
+			?>&nbsp;&nbsp;&nbsp;<?
+			printLink(SELF."?op=remove&group_code=$group_code", "");
+			jscriptBlock('window.opener.location=window.opener.location	');
+		}
+		else
+		{
+$chosen_char = getPostGetvar('char');
+?>
+<table cellpadding=2 cellspacing=1>
+	<tr>
+<?	
+for ( $i=65; $i<91; $i++ )
+{	$char = chr($i);
+	echo "<td>";
+	if ( $chosen_char == $char )
+		echo "<font color=blue><b>$char<b></font>";
+	else
+		printLink(SELF."?op=$op&add_by=$add_by&char=$char&group_code=$group_code", $char);
+	echo "</td>";
+}
+?>
+	</tr>
+</table>
+
+<? 	if ( $chosen_char )
+	{	$sql  = "select pun_id, pun_first_name, pun_middle_name, pun_last_name, pun_customer_number";
+		$sql .= ", pun_email from punter";// punter_cgroup";
+		//$sql .= " where pcg_cgr_code = '$group_code'";
+		//$sql .= " where pcg_pun_id = pun_id";
+		$sql .= " where pun_last_name like ('".strtolower($chosen_char)."%')";
+		$sql .= " or pun_last_name like ('$chosen_char%')";
+	
+		$rs  = $dbh->exec($sql);
+		$num_rows = $rs->getNumRows();
+		
+		if ( $num_rows > 0 )
+		{	
+?>			<br>
+			<form action="<?=SELF?>" method="POST" onSubmit="return membersSelected(this)">
+			<?printHiddenInput('form_submitted', 'yes')?>
+			<?printHiddenInput('op')?>
+			<?printHiddenInput('add_by')?>
+			<?printHiddenInput('members_chosen', 'yes')?>
+			<?printHiddenInput('group_code')?>
+			<table cellpadding=4 cellspacing=1 border=0>
+				<tr>
+					<td class=label>Add?</td>
+					<td class=label>Name</td>
+					<td class=label>Customer Number</td>
+				</tr>	
+<?			
+			while ( $rs->hasNext() )
+				{	$row = $rs->next();
+				$pun_id          = $row['pun_id'];
+					$first_name      = $row['pun_first_name'];
+					$middle_name     = $row['pun_middle_name'];
+					$last_name 		  = $row['pun_last_name'];
+					$customer_number = $row['pun_customer_number'];
+			
+					$full_name = "$last_name, $first_name $middle_name";
+
+							
+				if ( punterInGroup($group_code, $pun_id) ) 
+				{
+?>					<tr>
+						<td class=content><input type="checkbox" name="x<?=$i?>" disabled checked></td>
+						<td class=content><?=$full_name?></td>
+						<td class=content><?=$customer_number?></td>
+					</tr>												
+<?				}	
+				else 
+				{
+?>					<tr>
+						<td class=content><input type="checkbox" name="members[<?=$pun_id;?>]" ></td>
+						<td class=content><?=$full_name?></td>
+					   <td class=content><?=$customer_number?></td>
+					</tr>						
+<?				}
+			}	
+		}
+?>
+</table>				
+<?printHiddenInput('id_list', $id_list)?>
+<br>
+<?	}
+?>		
+<br>   	  	
+<a href="<?=SELF."?op=$op&group_code=$group_code"?>"><img src="<?=image_dir?>/button_back.gif" border=0></a>
+<? if ( $num_rows >  0 ) { ?>
+&nbsp;&nbsp; <input type="image" src="<?=image_dir?>/button_next.gif">
+<? } ?>
+</form>
+<?}
+		
+	}
+	elseif ( 'filter' == $add_by )
+	{	$bets 		 = $_POST['bets'];
+		$gain 		 = $_POST['gain'];
+		$loss 		 = $_POST['loss'];
+		$deposits 	 = $_POST['deposits'];
+		$withdrawals = $_POST['withdrawals'];
+		$domain 	 = $_POST['domain'];
+
+		
+		
+		$filter_chosen = $_POST['filter_chosen'];
+		
+		if ( $filter_chosen )
+		{
+			if ( isBlank($bets) && isBlank($gain) && isBlank($deposits) && isBlank($withdrawals) && isBlank($domain) )
+			{	addError("all", "");
+				
+			}
+			else
+			{			
+				if ( !isBlank($bets) )
+					if ( !isValidMoney($bets ) )
+						addError("bets", "");
+	
+				if ( !isBlank($gain) )
+					if ( !isValidMoney($gain ) )
+						addError("gain", "");
+				
+				if ( !isBlank($deposits) )
+					if ( !isValidMoney($deposits ) )
+						addError("deposits", "");
+				
+				if ( !isBlank($withdrawals) )
+					if ( !isValidMoney($withdrawals ) )
+						addError("withdrawals", "");					
+						
+				if ( ! areErrors() )
+				{	$sql  = "select pun_id, pun_customer_number, pun_username";
+					$sql .= ", pun_first_name, pun_middle_name, pun_last_name, pun_email";
+					$sql .= ", pun_email from punter, punter_credit where pcr_pun_id = pun_id  and ( 1=0 ";
+					
+					if ( $bets )
+						$financial_filt = $sql .= " OR pcr_total_bets > $bets";
+					if ( $gain )
+						$financial_filt = $sql .= " OR pcr_total_wins - pct_total_bets > $gain";
+					if ( $deposits )
+						$financial_filt = $sql .= " OR pcr_total_deposits > $deposits";
+					if ( $withdrawals )
+						$financial_filt = $sql .= " OR pcr_total_withdrawals > $withdrawals";														
+					if ( $domain )
+						$sql .= " OR split_part(pun_email, '@', 2) = '$domain'";
+					
+					$sql .= ')';
+											
+				    if ( $financial_filt)
+				    	$sql .= " and pun_member_type = 'FINANCIAL'";
+					
+					$rs  = $dbh->exec($sql);
+					$num_rows = $rs->getNumRows();
+					$existing_members = 0;
+					$new_members = 0;
+					if ( $num_rows > 0 )
+					{	while ( $rs->hasNext() )
+						{	$row = $rs->next();
+							$pun_id = $row['pun_id'];
+							
+							if ( punterInGroup($group_code, $pun_id) )
+								$existing_members++;
+							else
+							{	addToGroup($group_code, $pun_id);
+								doAdminUserLog($_SESSION['admin_id'], "add_to_group", $group_code, $pun_id);	
+							    $new_members++;	
+							}
+						}
+?><P><?
+						printInfoMessage("");
+?><P><?			
+						printLink(SELF."?op=add&group_code=$group_code", "");
+						?>&nbsp;&nbsp;&nbsp;<?
+						printLink(SELF."?op=remove&group_code=$group_code", "");
+						jscriptBlock('window.opener.location=window.opener.location');
+					}
+					else
+						addError("", "");
+				}
+			}
+			
+		}
+		
+		if ( ! $num_rows )
+		{	
+?>
+<div><b></div>	
+<P>
+<?showErrors();?>
+<P>
+<form action="<?=SELF?>" method="POST">
+<?printHiddenInput('form_submitted', 'yes')?>
+<?printHiddenInput('op')?>
+<?printHiddenInput('add_by')?>
+<?printHiddenInput('filter_chosen', 'yes')?>
+<?printHiddenInput('group_code')?>
+<?php
+   $empty_var = '';
+?>
+<table cellpadding=4 cellspacing=1 border=0>
+	<tr>
+		<td class=label> <font color=red><sup>*</sup></font></td>
+		<td class=content><input type="text" name="bets" value="<?=$bets?>" size=10></td>
+	</tr>
+	<tr>
+		<td class=label> <font color=red><sup>*</sup></font></td>
+		<td class=content><input type="text" name="gain" value="<?=$gain?>" size=10></td>
+	</tr>
+    <tr>
+		<td class=label> <font color=red><sup>*</sup></font></td>
+		<td class=content><input type="text" name="loss" value="<?=$loss?>" size=10></td>
+	</tr>
+	<tr>
+		<td class=label> <font color=red><sup>*</sup></font></td>
+		<td class=content><input type="text" name="deposits" value="<?=$deposits?>" size=10></td>
+	</tr>	
+	<tr>
+		<td class=label> <font color=red><sup>*</sup></font></td>
+		<td class=content><input type="text" name="withdrawals" value="<?=$withdrawals?>" size=10></td>
+	</tr>		
+	<tr>
+		<td class=label></td>
+		<td class=content><input type="text" name="domain" value="<?=$domain?>" size=20></td>
+	</tr>		
+</table>
+<br>
+<div class=small>
+ <font color=red>* </font>
+</div>
+<br/><br/>
+<div>
+	<a href="<?=SELF;?>?group_code=<?=$group_code;?>&op=add"><img src="<?=image_dir?>/button_back.gif" border=0></a>&nbsp;&nbsp;&nbsp;&nbsp; <input type="image" src="<?=image_dir?>/button_next.gif">&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+</form>
+<?		}
+	}
+	else
+	{
+?>	<div class=small><b></b></div>
+<?		
+?>		<form action="<?=SELF;?>" method="POST">
+		<?//printHiddenInput('form_submitted', 'yes')?>
+		<?printHiddenInput('op')?>
+		<input type="hidden" name="group_code" value="<?=$group_code;?>">
+		<!--<div class=body>
+		&nbsp;<img src="<?=image_dir;?>/button_forward_arrow.gif">&nbsp;&nbsp;<b>What would you like to do?</b>
+		</div>
+		<br>-->
+		<div class=small>
+		<input type="radio" name="add_by" value="pick" <? if ( 'pick' == $add_by ) echo "checked"?>> Pick specific members<br/>
+		<input type="radio" name="add_by" value="filter" <?if ( 'filter' == $add_by ) echo "checked"?>> Use filter
+		</div>
+		<br>
+		<div>
+		<a href="<?=SELF;?>?group_code=<?=$group_code;?>"><img src="<?=image_dir?>/button_back.gif" border=0></a>&nbsp;&nbsp;&nbsp;&nbsp; <input type="image" src="<?=image_dir?>/button_next.gif">&nbsp;&nbsp;&nbsp;&nbsp;
+		<div>
+<?		
+	}
+	
+}
+elseif ( 'remove' == $op )
+{	
+?>
+<div class=small><b></b></div>
+<P>
+<?
+
+$members_removed = $_POST['members_removed'];
+$members = $_POST['members'];
+
+if ( $members_removed )
+{	$id_arr = explode(',', $_POST['id_string']);
+
+	foreach ( $id_arr as $key => $pun_id )
+	{ 	if ( ! $members[$pun_id] )
+		{	removeFromGroup($group_code, $pun_id);
+			doAdminUserLog($_SESSION['admin_id'], "remove_from_group", $group_code, $pun_id);		
+		    $num_removed++;	
+		}		
+	}
+	printInfoMessage("");
+?><P><br><br><?			
+			printLink(SELF."?op=add&group_code=$group_code", "");
+			?>&nbsp;&nbsp;&nbsp;<?
+			printLink(SELF."?op=remove&group_code=$group_code", "");	
+   jscriptBlock('window.opener.location=window.opener.location');
+}	
+else
+{	$chosen_char = getPostGetvar('char');
+?>
+<table cellpadding=2 cellspacing=1>
+	<tr>
+<?	
+	for ( $i=65; $i<91; $i++ )
+	{	$char = chr($i);
+		echo "<td>";
+		if ( $chosen_char == $char )
+			echo "<font color=blue><b>$char<b></font>";
+		else
+			printLink(SELF."?op=remove&char=$char&group_code=$group_code", $char);
+		echo "</td>";
+	}
+?>
+	</tr>
+</table>
+
+<? 	if ( $chosen_char )
+	{	$sql  = "select pun_id, pun_first_name, pun_middle_name, pun_last_name, pun_customer_number";
+		$sql .= ", pun_email from punter, punter_cgroup";
+		$sql .= " where pcg_cgr_code = '$group_code'";
+		$sql .= " and pcg_pun_id = pun_id";
+		$sql .= " and (pun_last_name like ('".strtolower($chosen_char)."%')";
+		$sql .= " or pun_last_name like ('$chosen_char%'))";
+	
+		$rs  = $dbh->exec($sql);
+		$num_rows = $rs->getNumRows();
+		
+		if ( $num_rows > 0 )
+		{	
+	?>		<P>
+			Uncheck to remove
+			<P>
+			<form action="<?=SELF?>" method="POST" onSubmit="return membersUnselected(this)">
+				<?printHiddenInput('form_submitted', 'yes')?>
+				<?printHiddenInput('op')?>
+				<?printHiddenInput('members_removed', 'yes')?>
+				<?printHiddenInput('group_code')?>
+				<table cellpadding=4 cellspacing=1 border=0>
+					<tr>
+						<td class=label></td>
+						<td class=label></td>
+						<td class=label></td>
+					</tr>	
+	<?			while ( $rs->hasNext() )
+				{	$row = $rs->next();
+					$pun_id          = $row['pun_id'];
+					$first_name      = $row['pun_first_name'];
+					$middle_name     = $row['pun_middle_name'];
+					$last_name 		  = $row['pun_last_name'];
+					$customer_number = $row['pun_customer_number'];
+			
+					$full_name = "$last_name, $first_name $middle_name";
+?>				
+						<tr>
+							<td class=content><input type="checkbox" name="members[<?=$pun_id;?>]" checked></td>
+							<td class=content><?=$full_name?></td>
+							<td class=content><?=$customer_number?></td>
+						</tr>						
+<?					$id_arr[] = $pun_id;
+				}	
+?>					</table>
+					<?printHiddenInput('id_string', implode(',', $id_arr));?>
+			
+<?
+		}
+	}
+?>	<br>
+	<div>
+	<a href="<?=SELF."?group_code=$group_code"?>"><img src="<?=image_dir?>/button_back.gif" border=0></a>&nbsp;&nbsp;&nbsp;&nbsp;
+	<? 	if ( $num_rows > 0 ) { ?>
+		<input type="image" src="<?=image_dir?>/button_next.gif">&nbsp;&nbsp;&nbsp;&nbsp;
+	<?	} ?>
+	</div>
+	</form>
+<?	}
+}
+else
+{
+?>	<b></b>
+<?	
+?>
+	<form action="<?=SELF;?>" method="POST">
+	<input type="hidden" name="group_code" value="<?=$group_code;?>">
+	<!--<div class=body>
+	&nbsp;<img src="<?=image_dir;?>/button_forward_arrow.gif">&nbsp;&nbsp;<b>What would you like to do?</b>
+	</div>
+	<br>-->
+	<div class=small>
+	<input type="radio" name="op" value="add" <?if ( 'add' == $op ) echo "checked"?>> <br>
+	<input type="radio" name="op" value="remove" <?if ( 'remove' == $op ) echo "checked"?>> 
+	</div>
+	<br>
+	<div>
+	<input type="image" src="<?=image_dir?>/button_next.gif">&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+	</form>
+<?
+}
+
+$out = ob_get_clean();
+?>
+<div class=bodyHD2> ( <?=numMembers($group_code);?>)</div>
+<?=$out;?>
+<br><br>
+
+<div align="center">
+<a href="javascript:window.close()"><img src="<?=image_dir?>/button_close.gif" border=0></a>
+</div>
+</BODY>
+</HTML>

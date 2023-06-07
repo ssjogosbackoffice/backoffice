@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://logging.apache.org/log4php/">
+
+    <appender name="DB" class="LoggerAppenderFile">
+        <layout class="LoggerLayoutTTCC" />
+        <param name="file" value="/srv/web/backoffice/logs/dbData.log" />
+    </appender>
+
+    <logger name="DbLogger">
+        <level value="DEBUG" />
+        <appender_ref ref="DB" />
+    </logger>
+
+</configuration>

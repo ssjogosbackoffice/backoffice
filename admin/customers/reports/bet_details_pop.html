@@ -1,0 +1,111 @@
+<?
+$customer_id = getPostGetVar('customer_id');
+$res = (int)getPostGetVar('res');
+
+$sql  = "SELECT res_date, res_string, res_game_num, gam_id, gam_name, gam_result_viewer, gam_shortname";
+$sql .= ", gty_name, pre_bet_string, pre_bet, pre_win, pre_member_type, pre_bets_paid, res_is_live, pre_void, pre_void_details";
+$sql .= " FROM result, game, game_type, punter_result";
+$sql .= " WHERE res_id = $res and pre_res_id = res_id";
+$sql .= " and gam_gty_id = gty_id and pre_pun_id = $customer_id";
+$sql .= " and res_gam_id = gam_id";
+$rs = $dbh->exec($sql);
+
+if ( 1 == $rs->getNumRows() ) {
+$rec = $rs->next();
+$date = $rec['res_date'];
+$result_string = $res_string = $rec['res_string'];
+$game_number = $rec['res_game_num'];
+$game_id = $rec['gam_id'];
+$game_name = $rec['gam_name'];
+$game_shortname = $rec['gam_shortname'];
+$game_type = $rec['gty_name'];
+$result_viewer = $rec['gam_result_viewer'];
+$bet_string = $rec['pre_bet_string'];
+$bet = $rec['pre_bet'];
+$payout = $rec['pre_win'];
+$bets_paid = $rec['pre_bets_paid'];
+$member_type = $rec['pre_member_type'];
+$res_is_live = $rec['res_is_live'];
+$void = $rec['pre_void'];
+$void_details = $rec['pre_void_details'];
+
+if ( 'FINANCIAL' == $member_type )
+$formatfunc = 'getInDollars';
+else
+$formatfunc = 'getInFunTokens';
+} else {
+dieWithError('Result not found');
+}
+
+$customer_row = getCustomer($customer_id);
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>Bet Details</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="<?= secure_host ?>/admin/media/style.css" title="core_style" />
+    <script src="<?= secure_host ?>/admin/media/jfunctions.js" type="text/javascript"></script>
+</head>
+<body class="background2">
+<p>
+    <?php
+   $cr_full_name = $customer_row['full_name'];
+?>
+</p>
+<div class=bodyHD2>Bet details for <b><?=$cr_full_name?></b> playing <b><?=$game_name?></b> game # <b><?=$game_number?></b></div>
+<p>
+<div><?=('FINANCIAL'==$member_type ? "Financial Bet" : "Nonfinancial Bet");?>, <?=( $res_is_live ? "Live Game" : "RNG Game");?></div>
+<br/>
+<table cellpadding=4 cellspacing=1 border=0 class=repdata>
+    <tr>
+        <td class="formheading" colspan=2>Game</td>
+    </tr>
+    <tr>
+        <td class="label">Game:</td>
+        <td class="content"><?=$game_name?></td>
+    </tr>
+    <tr>
+        <td class="label">:</td>
+        <td class="content"><?=$game_number?></td>
+    </tr>
+    <tr>
+        <td class="label">Time</td>
+        <td class="content"><?=shortDate($date, true)?></td>
+    </tr>
+    <tr>
+        <td class="label">Total Bet</td>
+        <td class="content"><?=$formatfunc($bet)?></td>
+    </tr>
+    <tr>
+        <td class="label">Total Payout</td>
+        <td class="content"><?=$formatfunc($payout)?></td>
+    </tr>
+    <tr>
+        <td class="label">Casino Revenue <font color=red>(loss)</font> <font color=red>(loss)</font></td>
+        <td class="content"><?=$formatfunc($bet-$payout)?></td>
+    </tr>
+</table>
+<p>
+    <?
+   // was this result marked as void ?
+   if(!empty($void)) {
+?>
+<div style="margin-top: 5px;">
+    <strong><span style="color: #FF0000;">THIS RESULT HAS BEEN MARKED AS VOID</span></strong><br>
+    <?=$void_details?>
+</div>
+</p>
+<p>
+    <?php
+   }
+  include(include_content("resultviewer/".$result_viewer));
+//  dieWithError("");
+
+?>
+    <br/><br/>
+<p align="center">
+    <a href="javascript:window.close()"><img src="<?=image_dir?>/button_close.gif" border="0">
+</p>
+</body>
+</html>

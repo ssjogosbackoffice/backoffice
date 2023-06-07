@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+    <TITLE>Reset</TITLE>
+    <META http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+    <?include 'admin/javascript_css.inc' ?>
+</HEAD>
+
+<BODY>
+<?
+globalise('customer_id');
+$customer_id = (int)$customer_id;
+$customer_row = getCustomer($customer_id); //get all columns for this customer
+if ( ! $customer_row )
+  dieWithError("Customer not found");
+  	  
+$first_name     = $customer_row['first_name'];
+$full_name     = $customer_row['full_name'];
+
+$email_reg_code = $customer_row['email_reg_code'];
+$email = $customer_row['email'];
+$reg_status     = $customer_row['registration_status'];
+$pre_registered = $customer_row['pre_registered'];
+?>
+<?
+/////////////////////////////////////
+//Define multipart email message body
+
+//////First, the text part ?>
+<?ob_start();?>
+Hi <?=$first_name?>,<br/>Thank you for registering with <?=?> Online.<br/><br/>The first time you log in, you may <br/>be requested to enter a registration code.<br/><br/>Your Registration code is: [%email_reg_code%]<br/><br/>To login to now, go to:<br/><?=nonsecure_host?><br/><br/>We look forward to providing you with the most exciting experience in<br/>online gaming today. <br/><br/><?=?>" email_reg_code="$email_reg_code" nonsecure_host="<?=nonsecure_host?>"/>
+<? 
+$mail_body['text'] = ereg_replace("\r\n", "\n", ob_get_clean());
+
+///////Now define HTML part
+?>
+<?ob_start();?>
+<?include 'templates/email_head.inc';?>
+<img src="<?=secure_host;?>/register/email_read.php?reg_code=<?=$email_reg_code?>&email=<?=urlencode($email)?>" border=0>
+<P>
+    Hi <?=$first_name?>,<br/>Thank you for registering with <?=?> Online.<br/><br/>Please <a href="<?=nonsecure_host?>/?reg_code=[%email_reg_code%]" target="_new"><br/><font color="#0E240E">Click Here</font></a> to login.<br/>If you are prompted for a registration code, type in <font size=2><br/><b>&lt;?=[%email_reg_code%]?&gt;</b><br/></font>." email_reg_code="$email_reg_code" />
+    <br><br>
+    <?include 'templates/email_tail.inc';?>
+    <?
+$mail_body['html'] = ereg_replace("\r\n", "\n", ob_get_clean());
+
+//define the sender and recipeint 
+$email_sender    = new EmailFrom(EMAIL_REGISTRAR, CASINO_FULL_NAME." - Register", 1, 'admin', EMAIL_NOREPLY, EMAIL_NOREPLY);
+$email_recipient = new EmailRecipient($customer_row['email'], $customer_row['full_name'], $customer_row['id'], 'customer');
+
+//Send the email
+$mail_sent = SendSingleEmail ( $email_sender, $email_recipient, CASINO_FULL_NAME.' - Registration Confirmation', $mail_body['text'], $mail_body['html'], $priority=2);
+?>
+<div align=center>
+    <?
+if ( $mail_sent)
+{   doAdminUserLog($_SESSION['admin_id'], 'send_registration_email', $log_data="", $customer_row['id']);
+	printInfoMessage("The email registration code was successfully resent to $full_name");
+}
+else
+{   printerrorMessage("The email registration code FAILED to be resent to $full_name");
+}
+?>
+</div>
+<br>
+<div align="center">
+    <a href="javascript:window.close()"><img src="<?=image_dir?>/button_close.gif" border=0></a>
+</div>
+</BODY>
+</HTML>

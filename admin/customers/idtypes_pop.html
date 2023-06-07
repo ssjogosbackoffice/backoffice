@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+    <TITLE>ID documents</TITLE>
+
+    <script language=javascript type="text/javascript">
+        <?include 'jfunctions.js';?>
+    </script>
+
+    <?include 'style.css';?>
+    <script>
+        function saveEntry()
+        {	var str = "<?=$str?>"
+            var form = document.forms[0];
+
+            if ( form.idtype.options.selectedIndex > 0 && form.code.value && form.number.value )
+            {	if ( str.length > 0 )
+                str += ",";
+                window.opener.preg_form.id_documents.value = str + form.code.value+":"+form.number.value;
+                window.close();
+
+            }
+        }
+
+    </script>
+
+</HEAD>
+
+<BODY class=body leftmargin=0 topmargin=0 onLoad="window.resizeTo(370,100)">
+<form>
+    <table cellpadding=4 cellspacing="1" border=0 width=300 height=40 align=center>
+        <tr>
+            <td class=label>Type</td>
+            <td class=label>Code</td>
+            <td class=label>Number</td>
+            <td class=label>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class=content>
+                <select name="idtype" onChange="this.form.code.value=this.options[this.options.selectedIndex].value">
+                    <option value="">- Pick a type -
+                    <option value="PP">Passport
+                    <option value="DL">Driver's License
+                    <option value="ID">ID Card
+                    <option value="BS">Bank Statement
+                    <option value="CC">Credit Card
+                    <option value="AC">ATM Card
+                    <option value="??">Other
+                </select>
+            </td>
+            <td class=content><input type=text name=code size=3 value=""></td>
+            <td class=content><input type=text name=number size=14 value=""></td>
+            <td class=content><a href="javascript:saveEntry()"><img src="<?=image_dir?>/button_add.gif" border=0></a></td>
+
+        </tr>
+    </table>
+</form>
+
+</BODY>
+</HTML>

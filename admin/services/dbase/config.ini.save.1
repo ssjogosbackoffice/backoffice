@@ -1,0 +1,21 @@
+[default]
+command = "mysql -h ? -P ? -u ? -p? -e 'show slave status \G'"
+path = "/srv/web/backoffice/admin/services/dbase/stat/"
+ext = ".log"
+
+[database]
+settings[] = "10.15.0.15$3306$developer$TEAMDEVELOPER$[TEST]casinogames_slave"
+settings[] = "10.15.0.5$3306$einstain$0r0l0g1a10$[PROD]casinogames_master-slave"
+settings[] = "10.15.0.22$3306$einstain$0r0l0g1a10$[PROD]casinogames_slave"
+settings[] = "10.15.0.22$3307$ftpduser$dhwjg12e12e1hge$[PROD]ftpdb_slave"
+settings[] = "10.15.0.22$3308$barrowuser$jdshkdg3j321j$[PROD]barrow_slave"
+settings[] = "10.15.0.22$3309$maltacasino$dsahLgdu123y3e1SD$[PROD]malta_casinogames_slave"
+settings[] = "10.15.0.22$3311$belgiumcasino$jhdasdh12j12dc$[PROD]belgio_casino_slave"
+settings[] = "10.15.2.1$3306$einstain$0r0l0g1a10$[PROD]belgio_casino_master-slave"
+settings[] = "10.15.0.22$3312$casinoita$1211hgfhf1hgch1c2v$[PROD]italia_casinoita_slave"
+settings[] = "10.15.0.22$3313$granbetuser$dasjgdh1231jhHGFSA21342$[PROD]granbet_slave"
+settings[] = "10.15.1.2$3306$betting_slave$1321y2egfhqfsah12123$[PROD]malta_betting_slave"
+settings[] = "10.15.0.24$3314$betting_slave$1321y2egfhqfsah12123$[PROD]malta_betting_slave_rep_granbet"
+settings[] = "10.15.0.22$3316$betting_slave$1321y2egfhqfsah12123$[PROD]malta_betting_slave_rep_jebtest"
+settings[] = "10.15.0.22$3315$betting_slave$1321y2egfhqfsah12123$[PROD]malta_betting_slave_rep_jecolbet"
+settings[] = "10.15.0.64$3319$betting_slave$1321y2egfhqfsah12123$[PROD]malta_betting_slave_rep_romania"

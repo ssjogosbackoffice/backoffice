@@ -1,0 +1,208 @@
+<?php check_access('handle_processor_deposits', $doredirect=true); ?>
+<?php
+  //require_once realpath("./../config")."/site.conf.php";
+  //require_once "commons.inc.php";
+  if(!extension_loaded('curl')){
+    dl("curl.so");
+  }
+
+define("T_TYPE_REFUND", 6);
+define("T_TYPE_PROCESSOR_WITHDRAWAL", 10);
+define("T_TYPE_PROCESSOR_DEPOSIT",    3);
+define("WEB_APP_URL_ADMIN", "http://wsap.cslivegames.net:8080/services/WebSiteServiceManager");
+define('LOG_FILE_NAME', '/var/log/httpd/gatewaytransaction.log');
+define('HEADER_FILE_LOG', 'gatewaytransaction.php');
+$action = "SHOW";
+
+$thispage = SELF . "?page=" . $_GET['page'];
+ 
+  // Il puntatore al file di log
+  $log = null;
+
+if(isset($_GET['action'])){
+  $action = strtoupper(trim($_GET['action']));
+}
+
+$id = 0;
+
+if(isset($_GET['id'])){
+  $id = (int)$_GET['id'];
+}
+
+if($action != "SHOW"){
+$sql = "SELECT prc_id, prc_name, ptr_uniqueid, ptr_status, ptr_amount, ptr_pun_id FROM processor_transaction JOIN processor ON ptr_prc_id = prc_id WHERE ptr_id = $id";
+
+    $rs       = $dbh->exec($sql);
+    $num_rows = $rs->getNumRows();
+
+
+    $dbh->begin();
+
+    if ($num_rows != 1 ){
+      addError('', "Transaction error...");
+      $dbh->rollback();
+      break;
+    }
+
+    $rec    = $rs->next();
+    $amount = $rec['ptr_amount'];
+    $pun_id = $rec['ptr_pun_id'];
+    $aus_id = $_SESSION["admin_id"];
+    $status = $rec['ptr_status'];
+    $procId = $rec['prc_id'];
+    $tranId = $rec['ptr_uniqueid'];
+    
+	 // Viene inviato il messaggio per la gestione della transazione in pending dell'utente
+	 $result = send($tranId, strtolower($action), $pun_id, $procId, $aus_id, $_SESSION["admin_username"]);
+
+	 // Viene chiusa la connessione al DataBase
+	 $dbh->rollback();
+    
+
+    if($result != '0'){
+      addError("", "Impossibile salvare lo stato della transazione.");
+    } else {
+		printInfoMessage("Transazione di " . getInDollars($amount) . " processata successo, i soldi sono stati restituiti al cliente in caso di richiesta di pagamento.");
+    } // end if - else
+
+}
+showErrors();
+$sql = "select
+          ptr_id,
+          pun_id,
+          pun_username,
+          ptr_amount,
+          ptr_start,
+          ptr_user,
+          ptr_uniqueid,
+          ptr_note,
+          ptr_punip,
+          ptr_merchant_account,
+          prc_name
+        from
+          processor_transaction
+        JOIN
+          processor
+            ON ptr_prc_id = prc_id
+        JOIN
+          punter
+            ON pun_id = ptr_pun_id
+        WHERE
+          ptr_status = 'P'
+        ORDER BY
+          ptr_merchant_account ASC,
+          pun_username ASC,
+          prc_name ASC";
+
+$res = $dbh->exec($sql);
+
+if($res) {
+  $cols_arr = array('Date','Account', 'External ID', 'Processor', 'Username','Amount','Processor User', 'Notes', 'Action');
+
+  $val_fmt_arr = array (
+    'Date'             =>'return shortFormatDate($rec["ptr_start"]);',
+    'Account'          =>'return $rec["ptr_merchant_account"];',
+    'External ID'      =>'return getClassLink(refPage("poker/searchprocessordeposit") . "&search=watch&form_submitted=yes&field=6&value=" . $rec["ptr_uniqueid"], $rec["ptr_uniqueid"]);',
+    'Processor'        =>'return $rec["prc_name"];',
+    'Username'         =>'return getClassLink(refPage("customers/customer_view&customer_id=" . $rec["pun_id"]), $rec["pun_username"]);',
+    'Amount'           =>'return getInDollars($rec["ptr_amount"]);',
+
+    'Processor User'   =>'return getClassLink(refPage(\'poker/searchprocessordeposit&action=search&field=5&value=\' . urlencode($rec["ptr_user"])), $rec["ptr_user"]);',
+    'Notes'            =>'return getClassLink(refPage(\'customers/search&field=4&search_string=\' . urlencode(ereg_replace("[^0-9\.]", "", $rec["ptr_punip"]))), $rec["ptr_punip"]) . " " . $rec["ptr_note"];',
+    'Action'           =>'return
+                            "
+                              <a href=\'javascript:if(confirm(\"Sicuro di voler accettare la transazione di per " . $rec["pun_username"] . "?\")){document.location = \"' . $thispage . '&action=accepted&id=" . $rec["ptr_id"] . "\";};\'><font color=\"green\">Accetta</font></a> |
+                              <a href=\'javascript:if(confirm(\"Sicuro di voler declinare la transazione di per  " . $rec["pun_username"] . "?\")){document.location = \"' . $thispage . '&action=declined&id=" . $rec["ptr_id"] . "\";};\'><font color=\"red\">Declina </font></a>
+                            ";'
+  );
+
+
+
+  $deposits = array();
+  $withdraw = array();
+
+  foreach ($res->Records as $transaction){
+    if($transaction['ptr_amount']>0){
+      array_push($deposits, $transaction);
+    }else{
+      array_push($withdraw, $transaction);
+    }
+  }
+
+  $rs_deposits = new RecordSet($deposits);
+  $rs_withdraw = new RecordSet($withdraw);
+
+  echo "<h2>Pending Deposits</h2>";
+
+  $qp = new QueryPrinter(null);
+  $qp->printTable($rs_deposits, $cols_arr, $post_vars, $val_fmt_arr, $cell_fmt_arr, $sum_fmt_arr, $excel_filename, $header="", $width="", $start_row, count($deposits));
+
+  echo "<h2>Withdrawal Requests</h2>";
+
+  $qp = new QueryPrinter(null);
+  $qp->printTable($rs_withdraw, $cols_arr, $post_vars, $val_fmt_arr, $cell_fmt_arr, $sum_fmt_arr, $excel_filename, $header="", $width="", $start_row, count($withdraw));
+}
+
+
+
+  /**
+   * Effettua l'invio della richiesta al server del partner per l'estrazione dell'id locale dell'utente.
+   *
+   * @param $sessionId il sessionid locale associato all'utente
+   * @param $tableId l'id del tavolo
+   * @param $tableThemeId l'id del tema del tavolo
+   * @param $hostName il nome dell'host al quale connettersi
+   * @param $md5 l'md5 di sicurezza generato per il partner
+   * @return la risposta del partner
+   */
+  function send($transactionId, $status, $userId, $processorId, $agentId, $ausName) {
+   	$result;
+
+	// Viene generata la chiave per l'autenticitˆ del messaggio
+	$DataToSend ="operationtype=3011&agid=" . $agentId . "&procid=" . $processorId . "&tranid=" . $transactionId . "&status=" . $status .
+	             "&userid=" . $userId . "&ausname=" . $ausName;
+	log_data("   POST request parameter to Send: " . $DataToSend);
+
+	// Apro la connessione
+	$ch=curl_init(WEB_APP_URL_ADMIN);
+
+	// Imposto gli headers HTTP
+	// imposto curl per protocollo https
+	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, FALSE);
+	curl_setopt($ch,CURLOPT_POST,1);
+
+	// Invio i dati
+	curl_setopt($ch,CURLOPT_POSTFIELDS, $DataToSend);
+
+	//imposta la variabile PHP
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+
+	//Ricevo la risposta dal server
+	$result=curl_exec($ch);
+	return $result;
+  } // end function send()
+
+  /**
+   * Effettua la scrittura dei messaggi di log
+   *
+   * @param $msg il messaggio da scrivere nei log
+   */
+  function log_data($msg){
+    global $log;
+    if(empty($log)) {
+      $log = fopen(LOG_FILE_NAME,'a');
+    } // end if
+    fwrite($log, date(" H:i:s") . " - " . HEADER_FILE_LOG . " - " . $msg . "\n");
+  } // end function log_data()
+
+
+  /**
+   * Effettua la chiusura del file di log
+   */
+  function close() {
+    global $log;
+    fclose($log);
+  } // end function close()
+
+
+?>

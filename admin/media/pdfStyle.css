@@ -1,0 +1,47 @@
+body {
+    color: white;
+    font-family: "Arial rounded", Arial, sans-serif;
+    font-size: 12px;
+    background-color: #FFFFFF
+}
+tr:nth-child(even) {   background-color: rgb(240, 240, 240);}
+table {
+    max-width: 100%;
+    width:100%;
+    background-color: rgba(0, 0, 0, 0);
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.table-bordered th, .table-bordered td {
+    border-left: 1px solid rgb(221, 221, 221);
+}
+.table-bordered thead:first-child tr:first-child > th:first-child, .table-bordered tbody:first-child tr:first-child > td:first-child, .table-bordered tbody:first-child tr:first-child > th:first-child {
+    -webkit-border-top-left-radius: 4px;
+    border-top-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+}
+.table caption + thead tr:first-child th, .table caption + thead tr:first-child td, .table colgroup + thead tr:first-child th, .table colgroup + thead tr:first-child td, .table thead:first-child tr:first-child th, .table thead:first-child tr:first-child td {
+    border-top: 0;
+}
+.table-bordered {
+    border: 1px solid rgb(221, 221, 221);
+    border-collapse: separate;
+    border-left: 0;
+}
+.table-bordered caption + thead tr:first-child th, .table-bordered caption + tbody tr:first-child th, .table-bordered caption + tbody tr:first-child td, .table-bordered colgroup + thead tr:first-child th, .table-bordered colgroup + tbody tr:first-child th, .table-bordered colgroup + tbody tr:first-child td, .table-bordered thead:first-child tr:first-child th, .table-bordered tbody:first-child tr:first-child th, .table-bordered tbody:first-child tr:first-child td {
+    border-top: 0;
+}
+.table th, .table td {
+    padding: 8px;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: top;
+}
+.table td{white-space: nowrap;}
+
+.red {
+    color: rgb(255, 255, 255);
+    background: rgb(205, 3, 23);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 0, 12)), to(rgb(205, 3, 23)));
+    background: -moz-linear-gradient(top, rgb(255, 0, 12), rgb(205, 3, 23));
+}
