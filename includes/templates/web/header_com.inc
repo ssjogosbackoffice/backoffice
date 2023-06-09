@@ -38,21 +38,35 @@ header('Content-type: text/html; charset=UTF-8');
 
 <body style="background-color:white" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0"
     <?php
+    session_start();
+
     if ( !empty($onload) ) {
         $onload_code = "$onload;";
     }
-    if ( $_SESSION['restrict_access_msg'] ){
-        unset ($_SESSION['restrict_access_msg']);
+    if (isset($_SESSION['restrict_access_msg']) && $_SESSION['restrict_access_msg']) {
+        unset($_SESSION['restrict_access_msg']);
         $jsmsg = mb_ereg_replace("'", "\'", "You do not have the proper privileges to access the section you requested");
         $onload_code .= "jAlert('".$jsmsg."')";
     } else {
-        $jalert  = empty($alert) ? $_SESSION['alert_message'] : $alert;
-
-        if ( !empty($jalert) ) {
+        $jalert = isset($alert) ? $alert : (isset($_SESSION['alert_message']) ? $_SESSION['alert_message'] : '');
+    
+        if (!empty($jalert)) {
             $onload_code .= "jAlert('".$jalert."')";
-            unset ($_SESSION['alert_message']);
+            unset($_SESSION['alert_message']);
         }
     }
+    // if ( $_SESSION['restrict_access_msg'] ){
+    //     unset ($_SESSION['restrict_access_msg']);
+    //     $jsmsg = mb_ereg_replace("'", "\'", "You do not have the proper privileges to access the section you requested");
+    //     $onload_code .= "jAlert('".$jsmsg."')";
+    // } else {
+    //     $jalert  = empty($alert) ? $_SESSION['alert_message'] : $alert;
+
+    //     if ( !empty($jalert) ) {
+    //         $onload_code .= "jAlert('".$jalert."')";
+    //         unset ($_SESSION['alert_message']);
+    //     }
+    // }
 
     if ( !empty($onload_code) )
     {   echo 'onload ="'.$onload_code.'"';
