@@ -170,7 +170,7 @@ function printInDollars($amount, $decimal_places=2, $return=false,$sym=false,$gr
 
     if ( 0 == $amount && !$greaterThanZero ) {
 
-        ?><span class="cSymbol"><?=$symbol?></span><span class="cAmount"> 0 </span><?
+        ?><span class="cSymbol"><?=$symbol?></span><span class="cAmount"> 0 </span><?php
     } else {
         $val_out = number_format($amount,  $decimal_places, ',' , '.'); //get abs value
         if ( $amount <= 0 ) {
@@ -3509,7 +3509,6 @@ else
         return $jurTypeName;
     } // end method getJurisdictionClassName()
 
-
     function buildJurisdictionsTree($childArray,$onlyChild=false,$agencyCode=false,$class=false){
         global $lang;
         foreach($childArray as $key => $value){
@@ -4392,7 +4391,10 @@ else
         }
         return $skin;
     }
-    ?>
+    ?>    ?>
 
+
+    
+?>
 
     
