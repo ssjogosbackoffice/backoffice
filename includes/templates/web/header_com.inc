@@ -29,9 +29,9 @@ header('Content-type: text/html; charset=UTF-8');
     }
     // query string (minus language argument)
     $qs = mb_ereg_replace('[&]*set_language=[^&]*', '', $_SERVER['QUERY_STRING']);
-    if ( $head_include ) {
-        require_once ($head_include);
-    }
+    // if ( $head_include ) {
+    //     require_once ($head_include);
+    // }
     global $lang;
     ?>
 </head>

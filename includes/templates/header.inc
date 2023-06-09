@@ -1,4 +1,6 @@
 <?php
+define('DOT_IT', false);
+
 if (isset($_SESSION["pda"]) && $_SESSION["pda"] == true) {
   include('pda/header.inc');
 } else {
