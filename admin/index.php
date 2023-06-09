@@ -6,7 +6,7 @@ $qs = mb_ereg_replace('[&]*set_language=[^&]*', '', $_SERVER['QUERY_STRING']);
 ob_start();
 globalise('page');
 @include $page."_head.inc";
-include "header.inc";
+include "../includes/templates/header.inc";
 ?>
 
 
