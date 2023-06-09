@@ -3,7 +3,7 @@ define("CONNECT", 1);
 define("ERR_DBSQL", 2);
 define("ERR_DBNOCONNECTION", 3);
 
-include("MDB2.php");
+require_once 'MDB2.php';
 
 if ( ! class_exists('CacheFileManager' ))
     include 'CacheFileManager.class.inc';
