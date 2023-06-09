@@ -1028,15 +1028,23 @@ function globalisePost($var_name) {
         $GLOBALS[$var_name] = $_POST[$var_name];
 }
 
-function globalise($var_name, $func="") {
-    $value = ( $_POST[$var_name] ? $_POST[$var_name] : $_GET[$var_name]);
+function globalise($var_name, $func = "") {
+    $value = "";
 
-    if ( $func )
-        @$value = $func($value);
+    if (isset($_POST[$var_name])) {
+        $value = $_POST[$var_name];
+    } elseif (isset($_GET[$var_name])) {
+        $value = $_GET[$var_name];
+    }
+
+    if ($func && is_callable($func)) {
+        $value = $func($value);
+    }
 
     $GLOBALS[$var_name] = $value;
     return $value;
 }
+
 
 /**
  * @return boolean
