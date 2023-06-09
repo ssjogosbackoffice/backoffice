@@ -83,6 +83,7 @@ header('Content-type: text/html; charset=UTF-8');
                     <?php
                         include '../includes/classes/DatabaseHandler.class.inc';
                         $dbh = new DatabaseHandler;
+                        define("SKINID", "58");
                         $logoUrl=$dbh->queryOne("Select skn_media_url from skins where skn_id=".SKINID);
                         if(@get_headers($logoUrl."/main/site/media/images/logo_small.png")[0]!='HTTP/1.1 404 Not Found') {
                     ?>

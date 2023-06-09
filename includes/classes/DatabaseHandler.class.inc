@@ -180,6 +180,7 @@ class DatabaseHandler {
         $this->disconnect();
         //	ob_end_clean();
 
+        define('DEBUG', true);
         if (DEBUG) {
             if ( $error_code == ERR_DBNOCONNECTION ) {
                 echo "No Database Connection! Connect first!<P>";
