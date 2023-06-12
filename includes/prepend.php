@@ -62,5 +62,7 @@ if (isset($_SERVER["USE_HTTPS"]) && $_SERVER["USE_HTTPS"] == "false") {
 }else{
         define('HTTP_PROTO',  'https://');
 }
-include_once($_SERVER['CONFIG_FILE']);
+if(isset($_SERVER['CONFIG_FILE'])) {
+        include_once($_SERVER['CONFIG_FILE']);
+}
 ?>

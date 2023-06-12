@@ -82,8 +82,9 @@ header('Content-type: text/html; charset=UTF-8');
             <td width="40%"> <div style="text-align: center;font-size: 25px;color:orange;text-decoration: none">
                     <?php
                         include '../includes/classes/DatabaseHandler.class.inc';
+                        include '../config/backoffice.conf.inc';
                         $dbh = new DatabaseHandler;
-                        define("SKINID", "58");
+                        // define("SKINID", "58");
                         $logoUrl=$dbh->queryOne("Select skn_media_url from skins where skn_id=".SKINID);
                         if(@get_headers($logoUrl."/main/site/media/images/logo_small.png")[0]!='HTTP/1.1 404 Not Found') {
                     ?>

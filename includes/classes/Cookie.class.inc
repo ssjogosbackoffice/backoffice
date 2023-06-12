@@ -34,15 +34,13 @@ class Cookie {
         return isset($_COOKIE["$this->_nameCookie"]);
     }
 
-
     public function setCookieValue() {
-		if (is_null ( $_COOKIE ["$this->_nameCookie"] )) {
-			$this->_valueCookie = NULL;
+		if (isset($_COOKIE[$this->_nameCookie])) {
+			$this->_valueCookie = $_COOKIE[$this->_nameCookie];
 		} else {
-			$this->_valueCookie = $_COOKIE [$this->_nameCookie];
+			$this->_valueCookie = NULL;
 		}
-	}
-
+	}	
 }
 
 ?>

@@ -93,8 +93,8 @@ abstract class ObjectList extends Object {
   function getCurrentIndex() { return $this->CurrentIndex; }
 }
 
-if (!defined(PROP_DEF_SEPARATOR)) {
-  define(PROP_DEF_SEPARATOR, "\n");
+if (!defined('PROP_DEF_SEPARATOR')) {
+  define('PROP_DEF_SEPARATOR', "\n");
 }
 
 class Properties extends Object {

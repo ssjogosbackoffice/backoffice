@@ -1,4 +1,6 @@
 <?php
+require_once '../includes/prepend.php';
+
 if (empty($_SERVER['CASINO_NAME'])) {
     // die("Please configure CASINO_NAME in VirtualHost");
     $_SERVER['CASINO_NAME'] = "Backoffice";
@@ -162,7 +164,7 @@ $site_avail_langs = array('English'  => 'EN',   // Italiano
 
 #require_once('DatabaseHandler.class.inc');
 
-require_once('DatabaseWrapper.class.inc');
+require_once('../includes/classes/DatabaseWrapper.class.inc');
 
 include_once("Cookie.class.inc");
 
@@ -173,7 +175,9 @@ include_once("funclib/markup_functions.inc");
 include_once("funclib/network_functions.inc");
 include_once("funclib/financial_functions.inc");
 include "Db.php";
-
+require_once '../includes/classes/PathManager.class.inc';
+require_once '../includes/classes/Cookie.class.inc';
+require_once '../includes/php/Logger.php';
 
 define('WEB_I18N',     realpath(WEB_ROOT.'/../localization/'));
 define('DOMAIN', ".egaming.net");
@@ -181,12 +185,13 @@ define('DOMAIN', ".egaming.net");
 define('MMEM_LIFETIME', 7200);
 $mmemLifetime = 7200;
 
+
 PathManager::add(WEB_I18N);
 PathManager::set();
 ini_set('session.cookie_domain',DOMAIN);
 
+
 $sess_id_cookie = new Cookie ( 'bsid' );
-include_once 'Logger.php';//
 Logger::configure(WEB_CONFIG . "/log4php.xml");
 
 $dbLog = Logger::getLogger("DbLogger");
@@ -196,7 +201,9 @@ if(isset($_SESSION['jurisdiction_class'])) {
     }
 }
 if (is_null ( $sess_id_cookie->getCookieValue () )) {
-    session_destroy ();
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        session_destroy();
+    }
     $bsid = generateSessionId ();
     $sess_id_cookie->setCookie ( $bsid, time () + $mmemLifetime, '/', DOMAIN );
 } else {

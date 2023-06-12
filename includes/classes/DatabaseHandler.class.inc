@@ -36,8 +36,10 @@ class DatabaseHandler {
         //            mysql://egamesystem:qhqwqqwhdsq!@10.10.0.103/egamessystem
 
         $url = parse_url($this->DSN);
-        if ($url["path"]{0} == '/')
+        
+        if (isset($url["path"]) && $url["path"] !== '' && $url["path"]{0} == '/') {
             $url["path"] = substr($url["path"], 1);
+        }
         $dsn = array('phptype'   => $url['scheme'],
             'hostspec'  => $url['host'],
             'username'  => $url['user'],
