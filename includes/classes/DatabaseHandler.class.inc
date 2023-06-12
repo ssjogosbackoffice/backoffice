@@ -34,6 +34,12 @@ class DatabaseHandler {
     function connect() {
         //$this->DSN="mysql://developer:TEAMDEVELOPER@10.15.0.12/casinogames_malta";
         //            mysql://egamesystem:qhqwqqwhdsq!@10.10.0.103/egamessystem
+        // mysql scheme
+        // 10.10.0.103 hostname
+        // egamesystem username
+        // qhqwqqwhdsq! pass
+        // egamessystem path
+        // 
 
         $url = parse_url($this->DSN);
         

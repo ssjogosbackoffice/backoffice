@@ -1,5 +1,6 @@
 <?php /** MODIFICATO MANUEL RINALDI **/
 header('Content-type: text/html; charset=UTF-8');
+include '../config/backoffice.conf.inc';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -82,9 +83,7 @@ header('Content-type: text/html; charset=UTF-8');
             <td width="40%"> <div style="text-align: center;font-size: 25px;color:orange;text-decoration: none">
                     <?php
                         include '../includes/classes/DatabaseHandler.class.inc';
-                        include '../config/backoffice.conf.inc';
                         $dbh = new DatabaseHandler;
-                        // define("SKINID", "58");
                         $logoUrl=$dbh->queryOne("Select skn_media_url from skins where skn_id=".SKINID);
                         if(@get_headers($logoUrl."/main/site/media/images/logo_small.png")[0]!='HTTP/1.1 404 Not Found') {
                     ?>
