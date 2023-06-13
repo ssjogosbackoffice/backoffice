@@ -4,6 +4,8 @@ define("ERR_DBSQL", 2);
 define("ERR_DBNOCONNECTION", 3);
 
 require_once 'MDB2.php';
+require_once 'C:/xampp/htdocs/backoffice/config/backoffice.conf.inc'; // needs to be modified
+
 
 if ( ! class_exists('CacheFileManager' ))
     include 'CacheFileManager.class.inc';
@@ -42,7 +44,6 @@ class DatabaseHandler {
         // 
 
         $url = parse_url($this->DSN);
-        
         if (isset($url["path"]) && $url["path"] !== '' && $url["path"]{0} == '/') {
             $url["path"] = substr($url["path"], 1);
         }
@@ -66,7 +67,7 @@ class DatabaseHandler {
         //echo "</pre>";
         //$this->Connection  = &MDB2::factory($dsn,$options);
 
-        $this->Connection  = &MDB2::connect($dsn, $options);
+        $this->Connection  = MDB2::connect($dsn, $options);
        
 
         if (PEAR::isError($this->Connection)) {

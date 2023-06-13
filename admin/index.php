@@ -10,7 +10,6 @@ globalise('page');
 include "../includes/templates/header.inc";
 ?>
 
-
 <table align="center">
     <tr>
         <td>

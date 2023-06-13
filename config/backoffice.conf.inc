@@ -1,5 +1,6 @@
 <?php
 require_once '../includes/prepend.php';
+require_once 'database.conf.inc';
 
 if (empty($_SERVER['CASINO_NAME'])) {
     // die("Please configure CASINO_NAME in VirtualHost");
@@ -79,12 +80,12 @@ define('BETTING_COMMISSIONS_SERVER_IP', '82.20');
 //$_SERVER["ADMIN_DSN"] = "jconnpool://127.0.0.1:9087";
 
 //fine aggiunte
-if (isset($_SERVER["ADMIN_DSN"])) {
-    $url = parse_url($_SERVER["ADMIN_DSN"]);
+if (defined('DBCONF')) {
+    $url = parse_url(DBCONF);
     if ($url["path"]{0} == '/')
         $url["path"] = substr($url["path"], 1);
     if ($url["scheme"] == "mysql") {
-        define('DSN', $_SERVER["ADMIN_DSN"]);
+        define('DSN', DBCONF);
     }
 }
 
