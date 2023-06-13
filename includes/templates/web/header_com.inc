@@ -81,7 +81,6 @@ header('Content-type: text/html; charset=UTF-8');
             <td width=30%><a href="/index.php?page=lastaccess"><img src="<?=image_dir?>/header_logo_seclev.gif"></a></td>
             <td width="40%"> <div style="text-align: center;font-size: 25px;color:orange;text-decoration: none">
                     <?php
-                        include '../includes/classes/DatabaseHandler.class.inc';
                         $dbh = new DatabaseHandler;
                         $logoUrl=$dbh->queryOne("Select skn_media_url from skins where skn_id=".SKINID);
                         if(@get_headers($logoUrl."/main/site/media/images/logo_small.png")[0]!='HTTP/1.1 404 Not Found') {
