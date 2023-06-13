@@ -27,7 +27,7 @@ if (isset($_GET["err"]) && $_GET["err"] == "-10") {
 
 $isExternalSystem = 'false';
 if (isset($_POST["extsys"]) && $_POST["extsys"] == 'true') {
-    include_once '../config/backoffice.conf.inc';
+    // include_once '../config/backoffice.conf.inc';
     $isExternalSystem = $_POST["extsys"];
     $challenge = $_POST["challenge"];
     $_SESSION["challenge"] = $challenge;

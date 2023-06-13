@@ -1,5 +1,8 @@
 <?php
-require '../config/backoffice.conf.inc';
+if(!defined('DOT_IT'))
+{
+  require '../config/backoffice.conf.inc';
+}
 
 if (isset($_SESSION["pda"]) && $_SESSION["pda"] == true) {
   include('pda/header.inc');

@@ -4,8 +4,11 @@ define("ERR_DBSQL", 2);
 define("ERR_DBNOCONNECTION", 3);
 
 require_once 'MDB2.php';
-require_once 'C:/xampp/htdocs/backoffice/config/backoffice.conf.inc'; // needs to be modified
 
+if(!defined('DSN'))
+{
+    require_once 'C:/xampp/htdocs/backoffice/config/backoffice.conf.inc'; // needs to be modified
+}
 
 if ( ! class_exists('CacheFileManager' ))
     include 'CacheFileManager.class.inc';
