@@ -10,7 +10,7 @@ globalise('page');
 include "../includes/templates/header.inc";
 ?>
 
-<table align="center">
+<table align="center">  
     <tr>
         <td>
             <?php
