@@ -7,7 +7,7 @@ require_once 'MDB2.php';
 
 if(!defined('DSN'))
 {
-    require_once 'C:/xampp/htdocs/backoffice/config/backoffice.conf.inc'; // needs to be modified
+    require_once '../config/backoffice.conf.inc'; // needs to be modified
 }
 
 if ( ! class_exists('CacheFileManager' ))

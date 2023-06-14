@@ -80,7 +80,8 @@ header('Content-type: text/html; charset=UTF-8');
             <td width=30%><a href="/index.php?page=lastaccess"><img src="<?=image_dir?>/header_logo_seclev.gif"></a></td>
             <td width="40%"> <div style="text-align: center;font-size: 25px;color:orange;text-decoration: none">
                     <?php
-                        $dbh = new DatabaseHandler;
+                        $db = new DatabaseHandler;
+                        $dbh = $db->connect();
                         $logoUrl=$dbh->queryOne("Select skn_media_url from skins where skn_id=".SKINID);
                         if(@get_headers($logoUrl."/main/site/media/images/logo_small.png")[0]!='HTTP/1.1 404 Not Found') {
                     ?>
@@ -96,7 +97,13 @@ header('Content-type: text/html; charset=UTF-8');
 
                                 <div class="fright"  style="color:white">
                                     <span style="font-style:italic"><?=$lang->getLang("Server Time")?>:</span>
-                                    <span><? echo date('j/m/Y H:i:s');?></span></div>
+                                    <span>
+                                        <? 
+                                        date_default_timezone_set('America/Sao_Paulo');
+                                        echo date('j/m/Y H:i:s');
+                                        ?>
+                                    </span>
+                                </div>
                         </td>
                     </tr>
                     <tr>
