@@ -80,8 +80,9 @@ header('Content-type: text/html; charset=UTF-8');
             <td width=30%><a href="/index.php?page=lastaccess"><img src="<?=image_dir?>/header_logo_seclev.gif"></a></td>
             <td width="40%"> <div style="text-align: center;font-size: 25px;color:orange;text-decoration: none">
                     <?php
-                        $db = new DatabaseHandler;
-                        $dbh = $db->connect();
+                        $dbh = new DatabaseHandler;
+                        $dbh->connect();
+                        // the logoUrl's site doesn't exists
                         $logoUrl=$dbh->queryOne("Select skn_media_url from skins where skn_id=".SKINID);
                         if(@get_headers($logoUrl."/main/site/media/images/logo_small.png")[0]!='HTTP/1.1 404 Not Found') {
                     ?>
@@ -99,7 +100,6 @@ header('Content-type: text/html; charset=UTF-8');
                                     <span style="font-style:italic"><?=$lang->getLang("Server Time")?>:</span>
                                     <span>
                                         <? 
-                                        date_default_timezone_set('America/Sao_Paulo');
                                         echo date('j/m/Y H:i:s');
                                         ?>
                                     </span>
@@ -200,7 +200,7 @@ header('Content-type: text/html; charset=UTF-8');
                 ?>
 
             </td>
-            <?php if($_SESSION['jurisdiction_class'] == 'club'){?>
+            <?php if(isset($SESSION['jurisdiction_class']) && $_SESSION['jurisdiction_class'] == 'club'){?>
                 <td style="font-size:15pt">
                     <span style="font-style:italic"><?=$lang->getLang("Totem Code")?>:</span>
                     <span style="color:blue"><? echo $_SESSION['totem_code'];?></span>
