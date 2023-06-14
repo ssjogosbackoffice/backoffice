@@ -255,7 +255,7 @@ if (isset($_GET['set_language']) && in_array($_GET['set_language'],$site_avail_l
 require_once('Language.class.inc');
 $lang = new Language( $site_avail_langs);
 
-if ($_SESSION['must_change_pwd'] == true && $_REQUEST['page'] != 'change-password'){
+if (isset($_SESSION['must_change_pwd']) && $_SESSION['must_change_pwd'] == true && $_REQUEST['page'] != 'change-password'){
     header("Location: /?page=change-password&f=1");
 }
 
