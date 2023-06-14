@@ -249,7 +249,7 @@ if(isset($_SESSION['admin_id'])){
 }
 
 
-if (  in_array($_GET['set_language'],$site_avail_langs) ) {
+if (isset($_GET['set_language']) && in_array($_GET['set_language'],$site_avail_langs) ) {
     $_SESSION['language'] = $_GET['set_language'];
 }
 require_once('Language.class.inc');
