@@ -38,7 +38,6 @@ header('Content-type: text/html; charset=UTF-8');
 
 <body style="background-color:white" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0"
     <?php
-    session_start();
 
     if ( !empty($onload) ) {
         $onload_code = "$onload;";
