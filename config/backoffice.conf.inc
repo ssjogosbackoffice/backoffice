@@ -223,7 +223,7 @@ error_log("Will be created user session: bsid: " . $bsid . ' ---  SessCookie: ' 
 #$dbh->connect();
 
 $dbh = new DatabaseWrapper();
-if($_SERVER['THIRD_PART_BACKOFFICE'] == "betting"){
+if(isset($_SERVER['THIRD_PART_BACKOFFICE']) && $_SERVER['THIRD_PART_BACKOFFICE'] == "betting"){
     list($user_betting, $pass_betting, $host_betting, $db_betting) = explode(":",$_SERVER["BETTING_DSN"]);
     Db::setConnectionInfo($db_betting,$user_betting,$pass_betting,"mysql",$host_betting);
     include_once("funclib/betting_functions.inc");
