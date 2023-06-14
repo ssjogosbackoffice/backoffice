@@ -118,7 +118,8 @@ define('log_dir',        WEB_LOG);
 define('cache_file_dir', WEB_ROOT.'/cache');
 define('temp_download_url','/temp');
 
-define('nonsecure_host',    "https://".HOST);
+// default is https://, i changed because i was having ssl errors
+define('nonsecure_host',    "http://".HOST);
 define('secure_host',     nonsecure_host);
 
 define ( 'SECURITY_PID', 'SECURITY_PID_ADMIN' );
@@ -139,7 +140,8 @@ else {
   }
 }*/
 define('common_image_dir',  "/media/images");
-define('image_dir',         "/media/images");
+// default: define('image_dir',         "/media/images");
+define('image_dir',         "media/images");
 
 $site_avail_langs = array('English'  => 'EN',   // Italiano
     'Italiano' => 'IT',   // English

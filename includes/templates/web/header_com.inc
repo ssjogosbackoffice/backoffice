@@ -5,24 +5,24 @@ header('Content-type: text/html; charset=UTF-8');
 <html>
 <head>
     <title><?=$title?></title>
-    <link rel="stylesheet" type="text/css" href="<?= secure_host ?>/media/style.css" title="core_style" />
-    <link rel="Stylesheet" type="text/css" href="<?= secure_host ?>/media/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="<?= secure_host ?>/media/fancybox/source/jquery.fancybox.css" >
-   <link rel="stylesheet" type="text/css" href="<?= secure_host ?>/media//select2/select2.css" >
-   <link rel="stylesheet" type="text/css" href="<?= secure_host ?>/media/js/jAlert/jAlert.css" >
+    <link rel="stylesheet" type="text/css" href="media/style.css" title="core_style" />
+    <link rel="Stylesheet" type="text/css" href="media/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="media/fancybox/source/jquery.fancybox.css" >
+   <link rel="stylesheet" type="text/css" href="media//select2/select2.css" >
+   <link rel="stylesheet" type="text/css" href="media/js/jAlert/jAlert.css" >
 
-    <script src="<?= secure_host ?>/media/jquery.js" type="text/javascript"></script>
-    <script src="<?= secure_host ?>/media/fancybox/source/jquery.fancybox.js" type="text/javascript"></script>
-    <script src="<?= secure_host ?>/media/jquery.min.js" type="text/javascript"></script>
-    <script src="<?= secure_host ?>/media/ui/js/jquery-ui-1.9.0.js" type="text/javascript"></script>
-    <script src="<?= secure_host ?>/media/jfunctions.js" type="text/javascript"></script>
-    <script src="<?= secure_host ?>/media/stm31.js" type="text/javascript"></script>
+    <script src="media/jquery.js" type="text/javascript"></script>
+    <script src="media/fancybox/source/jquery.fancybox.js" type="text/javascript"></script>
+    <script src="media/jquery.min.js" type="text/javascript"></script>
+    <script src="media/ui/js/jquery-ui-1.9.0.js" type="text/javascript"></script>
+    <script src="media/jfunctions.js" type="text/javascript"></script>
+    <script src="media/stm31.js" type="text/javascript"></script>
 
-    <script type="text/javascript" src="<?= secure_host ?>/media/jquery-migrate-1.2.1.min.js" ></script>
-    <script src="<?= secure_host ?>/media/ui/js/jquery.timepicker.js" type="text/javascript"></script>
-    <script src="<?= secure_host ?>/media/select2/select2.js" type="text/javascript"></script>
-    <script src="<?= secure_host ?>/media/jquery.alerts.js" type="text/javascript"></script>
-    <script src="<?= secure_host ?>/media/js/jAlert/jAlert.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="media/jquery-migrate-1.2.1.min.js" ></script>
+    <script src="media/ui/js/jquery.timepicker.js" type="text/javascript"></script>
+    <script src="media/select2/select2.js" type="text/javascript"></script>
+    <script src="media/jquery.alerts.js" type="text/javascript"></script>
+    <script src="media/js/jAlert/jAlert.min.js" type="text/javascript"></script>
     <?php
     if (!empty($more_headers)) {
         print $more_headers;
