@@ -23,7 +23,7 @@ if ( isLoggedIn() ) {
 echo ob_get_clean();
 ?>
             <img src="<?=image_dir?>/clear.gif" width=0 height=0 <?
-   if ( $_SESSION['alert_message'] )  {
+   if ( isset($_SESSION['alert_message']) )  {
 
 ?> onLoad="alert('<?=ereg_replace("'", "\'", $_SESSION['alert_message']);?>');<?
    if ($code_action)

@@ -37,7 +37,7 @@ if ($UserLoggedByIp != '' && ! is_null($UserLoggedByIp)) {
     $_POST['admin_username'] = $UserLoggedByIp;
     $_POST['admin_password'] = 'ok';
 }
-if ($_POST['do_login'] || $_POST['do_login'] == 'yes') {
+if (isset($_POST['do_login']) && $_POST['do_login'] == 'yes') {
     
     if (! $sess_id_cookie->wasSentbyClient() && $isExternalSystem == 'false') {
         addError("", $lang->getLang("You need to enable cookies to login"));
