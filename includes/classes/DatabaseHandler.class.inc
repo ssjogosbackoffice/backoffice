@@ -71,7 +71,6 @@ class DatabaseHandler {
         //$this->Connection  = &MDB2::factory($dsn,$options);
 
         $this->Connection  = MDB2::connect($dsn, $options);
-       
 
         if (PEAR::isError($this->Connection)) {
             $this->handleDatabaseError(ERR_DBCONNECT);

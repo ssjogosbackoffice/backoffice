@@ -37,7 +37,10 @@ class DatabaseWrapper{
     }
 
     private function checkSlaves(){
-        $this->_slaveConnections=$_SERVER['SLAVEDBS_NUMBER'];
+        if(isset($_SERVER['SLAVEDBS_NUMBER']))
+        {   
+            $this->_slaveConnections=$_SERVER['SLAVEDBS_NUMBER'];
+        }
         if(!$this->_slaveConnections){
            $this->_slaveConnections=false;
         }
