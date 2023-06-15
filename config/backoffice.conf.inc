@@ -216,6 +216,7 @@ if (is_null ( $sess_id_cookie->getCookieValue () )) {
 session_name("asid");
 session_id ( $sess_id_cookie->getCookieValue () );
 session_start ();
+$bsid = $sess_id_cookie->getCookieValue();
 error_log("Will be created user session: bsid: " . $bsid . ' ---  SessCookie: ' . $sess_id_cookie->getCookieValue ());
 
 
