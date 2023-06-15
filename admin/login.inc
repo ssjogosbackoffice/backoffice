@@ -38,7 +38,6 @@ if ($UserLoggedByIp != '' && ! is_null($UserLoggedByIp)) {
     $_POST['admin_password'] = 'ok';
 }
 if (isset($_POST['do_login']) && $_POST['do_login'] == 'yes') {
-    var_dump($_COOKIE);
     if (! $sess_id_cookie->wasSentbyClient() && $isExternalSystem == 'false') {
         addError("", $lang->getLang("You need to enable cookies to login"));
     } else {
@@ -51,13 +50,13 @@ if (isset($_POST['do_login']) && $_POST['do_login'] == 'yes') {
             $admin_password = $_POST['admin_password'];
             $captcha_code = strtolower($_POST['captcha_code']);
             if (! fieldsBlank($admin_username, $admin_password)) {
-                $filename = log_dir . "/access_log.csv";
-                if (! file_exists($filename)) {
-                    $fp = fopen($filename, "a");
-                    fputs($fp, "date and time(YYYY-MM-DD Hour:min:sec),admin username,login success\n");
-                    fclose($fp);
-                }
-                $fp = fopen($filename, 'a');
+                // $filename = log_dir . "/access_log.csv";
+                // if (! file_exists($filename)) {
+                //     $fp = fopen($filename, "a");
+                //     fputs($fp, "date and time(YYYY-MM-DD Hour:min:sec),admin username,login success\n");
+                //     fclose($fp);
+                // }
+                // $fp = fopen($filename, 'a');
                 $admin_password_md5 = md5($_POST['admin_password']);
 
                 // get details of administration user for entered username and password
@@ -308,9 +307,9 @@ if (isset($_POST['do_login']) && $_POST['do_login'] == 'yes') {
                                     $dbh->exec("UPDATE admin_user SET aus_failed_logins=$aus_failed_logins where aus_id=$aus_id");
                                 }
                                 doAdminUserLog($row['aus_id'], 'admin_login', 'login:unsuccessful');
-                                if ($fp) {
-                                    fputs($fp, date('Y-m-d H:i:s') . ",$admin_username,unsuccessful\n");
-                                }
+                                // if ($fp) {
+                                //     fputs($fp, date('Y-m-d H:i:s') . ",$admin_username,unsuccessful\n");
+                                // }
                                 addError("", $lang->getLang("Invalid user or password"));
                             }
                         }
@@ -318,9 +317,9 @@ if (isset($_POST['do_login']) && $_POST['do_login'] == 'yes') {
                 } else { // no matching user record found for username/password
                     addError("", $lang->getLang("Invalid user or password"));
                 }
-                if ($fp) {
-                    fclose($fp);
-                }
+                // if ($fp) {
+                //     fclose($fp);
+                // }
             }
         }
     }
