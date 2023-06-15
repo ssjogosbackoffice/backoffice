@@ -183,8 +183,8 @@ require_once '../includes/classes/Cookie.class.inc';
 require_once '../includes/php/Logger.php';
 
 define('WEB_I18N',     realpath(WEB_ROOT.'/../localization/'));
-define('DOMAIN', ".egaming.net");
-
+// default: define('DOMAIN', ".egaming.net");
+define('DOMAIN', "localhost");
 define('MMEM_LIFETIME', 7200);
 $mmemLifetime = 7200;
 
