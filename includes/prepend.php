@@ -37,7 +37,8 @@ include_once("classes/Exception.class.inc");
 //include_once("");
 
 function clean($arr) {
-  return is_array($arr) ? array_map('clean', $arr) : ereg_replace('\.\./*', '', $arr);
+        // ereg_replace('\.\./*', '', $arr)
+  return is_array($arr) ? array_map('clean', $arr) : preg_replace('/\.\.\/*/', '', $arr);
 }
 
 $_GET     = clean($_GET);
