@@ -36,7 +36,7 @@ class Language {
         array_shift($args);
         $arg_list--;
         if($arg_list == 0){
-            if(($this->lang_array[strtolower($text)])!=''){
+            if(isset($this->lang_array[strtolower($text)])){
                 return ucfirst($this->lang_array[strtolower($text)]);
             }else{
                 return ucfirst($text);

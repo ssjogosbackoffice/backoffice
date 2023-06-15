@@ -1435,7 +1435,7 @@ $language = array(
     "query error! please contact assistance.thank you!" => "erro de consulta! entre em contato com a assistência. obrigado!
 ",
     "totem partial closure" => "",
-    "server time" => "",
+    "server time" => "Hora do server",
     "the betting live percent" => "a percentagem de apostas ao vivo",
     "a last name must be entered" => "um último nome deve ser digitado",
     "generating report.." => "gerando relatório ...",

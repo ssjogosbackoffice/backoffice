@@ -400,10 +400,10 @@ if ($isExternalSystem == 'false') {
     			<tr>
     				<td class=label>&nbsp;</td>
     				<td class=content><img id="captcha"
-    					src="/securimage/securimage_show.php" alt="CAPTCHA Image" /> <a
+    					src="securimage/securimage_show.php" alt="CAPTCHA Image" /> <a
     					href="#"
-    					onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?sid=' + Math.random(); return false;">
-    						<img src="/securimage/images/refresh.png" width="25" height="25"
+    					onclick="document.getElementById('captcha').src = 'securimage/securimage_show.php?sid=' + Math.random(); return false;">
+    						<img src="securimage/images/refresh.png" width="25" height="25"
     						alt="refresh Image" /></td>
     			</tr>
                 <? } ?>
