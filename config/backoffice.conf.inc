@@ -33,7 +33,7 @@ define('temp_dir', WEB_ROOT.'/admin/temp');
 define("CACHING_DRIVER", "FileSystem");
 
 //Enable or disable the captcha check from here. Can have only TRUE or FALSE VALUES
-define("ADD_CAPTCHA_CHECK", true);
+define("ADD_CAPTCHA_CHECK", false);
 
 define("SQL_CACHE_DIR", WEB_ROOT . "/cache/sqlcache");
 //aggiunte per unificazione finanziario .it e .com
