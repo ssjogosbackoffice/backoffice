@@ -211,8 +211,12 @@ header('Content-type: text/html; charset=UTF-8');
                 <td align=right style="width:auto" class="fright">
                     <table>
                         <tr>
-                            <?$currency=$_SESSION['currencies'];
-                            if($currency!='' && check_access('view_admin_currencies', false)){
+                            <?
+                            if(isset($_SESSION['currencies']))
+                            {
+                                $currency=$_SESSION['currencies'];
+                            }
+                            if(isset($currency) && check_access('view_admin_currencies', false)){
                             ?>
                             <td>
                                 <script type="text/javascript">

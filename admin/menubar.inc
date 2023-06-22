@@ -56,7 +56,8 @@ if (isLoggedIn()) {
         if(strtolower($key)!='url'){
         $submenu = $menu_parsed[$key]["submenu"];
         $access_tasks = $menu_parsed[$key]["access"];
-        $http_site = (!is_null($menu_parsed[$key]["site"])) ? $menu_parsed[$key]["site"] : "";
+        $http_site = (isset($menu_parsed[$key]["site"])) ? $menu_parsed[$key]["site"] : "";
+        // DEFAULT: $http_site = (!is_null($menu_parsed[$key]["site"])) ? $menu_parsed[$key]["site"] : "";
         if(check_access($access_tasks)){
             ?>
             <li class="principal" ><a href="#"><?=$lang->getLang($key)?></a>

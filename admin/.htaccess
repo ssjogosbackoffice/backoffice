@@ -8,7 +8,8 @@
     RewriteEngine On
     # RewriteCond %{SERVER_PORT} 80
     # RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,L]
-    RewriteRule ^$ /index.php [NC]
+    # RewriteRule ^$ /index.php [NC]
+    RewriteRule ^admin/?$ /admin/index.php [L]
     RewriteRule ^admin_user_add /admin_users/admin_user_add.php [NC]
     RewriteRule ^admin_user_type /admin_users/user_types.php [NC]
     RewriteRule ^admin_user_search /admin_users/index.php [L,QSA]
