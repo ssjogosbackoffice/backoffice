@@ -118,13 +118,15 @@ define('log_dir',        WEB_LOG);
 define('cache_file_dir', WEB_ROOT.'/cache');
 define('temp_download_url','/temp');
 
-// default is https://, i changed because i was having ssl errors
+// DEFAULT is https://, i changed because i was having ssl errors
 define('nonsecure_host',    "http://".HOST);
 define('secure_host',     nonsecure_host);
 
 define ( 'SECURITY_PID', 'SECURITY_PID_ADMIN' );
-define ( "MEMSERVERCACHE", "10.10.30.13");
-define ( "MEMPORTCACHE", 11211);
+define("MEMSERVERCACHE", '127.0.0.1');
+define("MEMPORTCACHE", '11211');
+//DEFAULT: define ( "MEMSERVERCACHE", "10.10.30.13");
+//DEFAULT:  define ( "MEMPORTCACHE", 11211);
 
 define ( "REDISSERVER", "10.10.30.13");
 define ( "REDISPORT", 6379);
