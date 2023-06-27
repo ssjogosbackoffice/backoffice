@@ -142,7 +142,7 @@ else {
   }
 }*/
 define('common_image_dir',  "/media/images");
-// default: define('image_dir',         "/media/images");
+// DEFAULT: define('image_dir',         "/media/images");
 define('image_dir',         "media/images");
 
 $site_avail_langs = array('English'  => 'EN',   // Italiano
@@ -185,7 +185,7 @@ require_once '../includes/classes/Cookie.class.inc';
 require_once '../includes/php/Logger.php';
 
 define('WEB_I18N',     realpath(WEB_ROOT.'/../localization/'));
-// default: define('DOMAIN', ".egaming.net");
+// DEFAULT: define('DOMAIN', ".egaming.net");
 define('DOMAIN', "localhost");
 define('MMEM_LIFETIME', 7200);
 $mmemLifetime = 7200;

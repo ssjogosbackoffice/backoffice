@@ -281,7 +281,7 @@ if (isset($_POST['do_login']) && $_POST['do_login'] == 'yes') {
                                                         $_SESSION["must_change_pwd"] = true;
 
                                                         header("Location: /backoffice/admin/change-password.php");
-                                                        // default: header("Location: " . SELF . "?page=change-password&f=1");
+                                                        // DEFAULT: header("Location: " . SELF . "?page=change-password&f=1");
                                                         exit();
                                                     }
                                                     
