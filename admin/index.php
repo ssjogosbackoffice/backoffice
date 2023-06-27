@@ -1,12 +1,13 @@
 <?php
-require_once '../config/backoffice.conf.inc';
+require_once '../includes/funclib/general_functions.inc';
+// require_once '../config/backoffice.conf.inc';
 // query string (minus language argument)
 $qs = mb_ereg_replace('[&]*set_language=[^&]*', '', $_SERVER['QUERY_STRING']);
 
 ob_start();
 globalise('page');
 @include $page."_head.inc";
-include "../includes/templates/header.inc";
+require_once "../includes/templates/header.inc";
 ?>
 
 <table align="center">  
@@ -14,9 +15,9 @@ include "../includes/templates/header.inc";
         <td>
             <?php
 if ( isLoggedIn() ) {
-   include ($page  ? "$page.inc" : "default.inc");
+   require_once $page  ? "$page.inc" : "default.inc";
 } else { 
-   include('login.inc');
+   require_once 'login.inc';
 }
 
 echo ob_get_clean();

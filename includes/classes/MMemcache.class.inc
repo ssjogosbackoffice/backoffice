@@ -131,7 +131,8 @@ class MMemcache {
     /**
      * function called automatic by php
      */
-    public function __destruct() {
-        $this->close_connection();
-    } // end method __destruct()
+    // DEFAULT: (i don't want that the connection to be closed)
+    // public function __destruct() {
+    //     $this->close_connection();
+    // } // end method __destruct()
 }

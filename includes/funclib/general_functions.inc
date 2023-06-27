@@ -1,10 +1,13 @@
 <?php
 //Modificate tutte le query Manuel Rinaldi tolto TO_CHAR
-function checkSingleUserLogged($user_id, $sessionID){
-    global $memcached;
+function checkSingleUserLogged($user_id, $sessionID, $memcached){
     if(is_null($user_id)) return false;
-    $value = $memcached->get($user_id);
-    if($value != $sessionID){
+    if(!isset($_SESSION['memcached_value']))
+    {
+        $_SESSION['memcached_value'] = $memcached->get($user_id);
+    }
+
+    if($_SESSION['memcached_value'] != $sessionID){
         session_destroy();
         return false;
     }

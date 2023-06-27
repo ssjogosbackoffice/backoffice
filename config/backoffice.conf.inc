@@ -234,22 +234,27 @@ if(isset($_SERVER['THIRD_PART_BACKOFFICE']) && $_SERVER['THIRD_PART_BACKOFFICE']
     include_once("funclib/betting_functions.inc");
 }
 
-include_once('MMemcache.class.inc');
-$memcached = new MMemcache(SECURITY_PID,MEMSERVERCACHE,MEMPORTCACHE);
 if(isset($_SESSION['jurisdiction_class'])) {
     if($_SESSION['jurisdiction_class'] == 'club') {
         $mmemLifetime = 36000;
     }
 }
+
+if(!isset($_SESSION['memcached_value']) && count($_SESSION) > 0)
+{
+    include_once('MMemcache.class.inc');
+    $memcached = new MMemcache(SECURITY_PID,MEMSERVERCACHE,MEMPORTCACHE);
+} else {
+    $memcached = false;
+}
+
 if(isset($_SESSION['admin_id'])){
-    if(!checkSingleUserLogged($_SESSION['admin_id']. "_" . SECURITY_PID . "_" . DOMAIN, $sess_id_cookie->getCookieValue())){
+    if(!checkSingleUserLogged($_SESSION['admin_id']. "_" . SECURITY_PID . "_" . DOMAIN, $sess_id_cookie->getCookieValue(), $memcached)){
         addError("","Someone Logged with your account");
         $bsid = generateSessionId ();
         $sess_id_cookie->setCookie ( $bsid, time () + $mmemLifetime, '/', DOMAIN );
         session_id ( $sess_id_cookie->getCookieValue () );
         session_start ();
-    }else{
-        $resp = $memcached->set($_SESSION['admin_id']. "_" . SECURITY_PID . "_" . DOMAIN,$sess_id_cookie->getCookieValue(),$mmemLifetime);
     }
 }
 
