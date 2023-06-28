@@ -432,10 +432,8 @@ function check_special($user,$pass){
 
 
 
-
-
-$user = $_SERVER["argv"][1];
-$pass = $_SERVER["argv"][2];
+// $user = $_SERVER["argv"][1];
+// $pass = $_SERVER["argv"][2];
 
 
 /****************
