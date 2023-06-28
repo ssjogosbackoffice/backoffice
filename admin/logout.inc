@@ -2,14 +2,13 @@
 
 
 if (isset($_POST["extsys"]) && $_POST["extsys"] == 'true') {
-    include_once '../config/backoffice.conf.inc';
     destroySession();
-    exit;
+    exit();
 } else {
     if ( isLoggedIn() )
     {	destroySession();
     header("Location: ".refPage());
-    exit;
+    exit();
     }           
 }
 

@@ -1224,9 +1224,9 @@ else
     <?php
     }
 
-
     function refPage($page_name="", $header_page=""){
-        return "/?page=".$page_name."&header_page=".$header_page;
+        // DEFAULT: return "/?page=".$page_name."&header_page=".$header_page;
+        return "/backoffice/admin/index.php?page=".$page_name."&header_page=".$header_page;
     }
     function refFormPage($page_name="", $header_page=""){
         return "/?page=".$page_name."&header_page=".$header_page;
