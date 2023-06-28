@@ -128,7 +128,7 @@ if ( $form_submitted )
 }
 
 
-if ( !isset($form_submitted) || areErrors() )
+if ( $form_submitted == '' || !isset($form_submitted) || areErrors() )
 { 
     showErrors();
 ?>
