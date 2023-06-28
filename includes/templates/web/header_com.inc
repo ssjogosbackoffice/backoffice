@@ -77,7 +77,8 @@ header('Content-type: text/html; charset=UTF-8');
             <td colspan=3 bgcolor="#000000"><img src="<?=image_dir;?>/clear.gif" width=1 height=10></td>
         </tr>
         <tr height=60 valign=top>
-            <td width=30%><a href="/index.php?page=lastaccess"><img src="<?=image_dir?>/header_logo_seclev.gif"></a></td>
+            <!-- DEFAULT: href="/index.php?page=lastaccess" -->
+            <td width=30%><a href="index.php?page=lastaccess"><img src="<?=image_dir?>/header_logo_seclev.gif"></a></td>
             <td width="40%"> <div style="text-align: center;font-size: 25px;color:orange;text-decoration: none">
                     <?php
                         $dbh = new DatabaseHandler;
