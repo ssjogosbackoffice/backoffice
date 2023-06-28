@@ -65,7 +65,7 @@ if(isset($_GET['f']))
 
 if ( $form_submitted )
 {  
-    if ( $_SESSION['password_submit_code'] == $_POST['submit_code'] )
+    if ( isset($_SESSION['password_submit_code']) && $_SESSION['password_submit_code'] == $_POST['submit_code'] )
     {
 ?>
         <p class=mesg><?=$lang->getLang("Your password has been changed")?>.</p>
@@ -87,7 +87,7 @@ if ( $form_submitted )
             {
                 $sql  = "update admin_user set aus_password = '$new_password_md5', aus_password_set_time=CURRENT_TIMESTAMP";
 
-                if($_SESSION['must_change_pwd'] == true)
+                if(isset($_SESSION['must_change_pwd']) &&$_SESSION['must_change_pwd'] == true)
                 {
                     $sql .= ", aus_access='ALLOW'";
                 }
@@ -97,26 +97,26 @@ if ( $form_submitted )
 
                 if ( $rs )
                 {
-                    unset($_SESSION['must_change_pwd']);
-                    $_SESSION['password_submit_code'] = $_POST['submit_code'];
-                    $config = array(
-                        'private_key_bits' => 2048,
-                        'private_key_type' => OPENSSL_KEYTYPE_RSA
-                    );
-                    $res = openssl_pkey_new($config);
-                    openssl_pkey_export($res, $privKey, $new_password_md5);
-                    $public_key = openssl_pkey_get_details($res);
-                    $public_key = $public_key['key'];
-                    openssl_get_publickey($pub_key);
-                    openssl_public_encrypt($new_password_md5, $crypted, $public_key,OPENSSL_PKCS1_OAEP_PADDING);
-                    $value =  base64_encode($crypted);
-                    $sql = "update admin_user set aus_ssl_key = '$value', aus_has_key = 1 where aus_id = $aus_id";
-                    $rs = $dbh->exec($sql);
-                    file_put_contents(KEYS_DIR."/privateKey_".$aus_id.".pem",$privKey);
-                    //openssl_pkey_export_to_file($privKey,"keys/privateKey_".$aus_id.".pem", NULL);
+                //     unset($_SESSION['must_change_pwd']);
+                //     $_SESSION['password_submit_code'] = $_POST['submit_code'];
+                //     $config = array(
+                //         'private_key_bits' => 2048,
+                //         'private_key_type' => OPENSSL_KEYTYPE_RSA
+                //     );
+                //     $res = openssl_pkey_new($config);
+                //     openssl_pkey_export($res, $privKey, $new_password_md5);
+                //     $public_key = openssl_pkey_get_details($res);
+                //     $public_key = $public_key['key'];
+                //     openssl_get_publickey($pub_key);
+                //     openssl_public_encrypt($new_password_md5, $crypted, $public_key,OPENSSL_PKCS1_OAEP_PADDING);
+                //     $value =  base64_encode($crypted);
+                //     $sql = "update admin_user set aus_ssl_key = '$value', aus_has_key = 1 where aus_id = $aus_id";
+                //     $rs = $dbh->exec($sql);
+                //     file_put_contents(KEYS_DIR."/privateKey_".$aus_id.".pem",$privKey);
+                //     //openssl_pkey_export_to_file($privKey,"keys/privateKey_".$aus_id.".pem", NULL);
                     printInfoMessage($lang->getLang("Your password has been changed").".");
-                    $download_cert = check_access ( 'download_certs');
-                    if($download_cert) printInfoMessage($lang->getLang("It's very important to download")."<a href='certificate/download.php?id=".$aus_id."' >".$lang->getLang("this file")."</a>".$lang->getLang("to be allowed to login the next time"));
+                //     $download_cert = check_access ( 'download_certs');
+                //     if($download_cert) printInfoMessage($lang->getLang("It's very important to download")."<a href='certificate/download.php?id=".$aus_id."' >".$lang->getLang("this file")."</a>".$lang->getLang("to be allowed to login the next time"));
                 } else {
                     addError("", $lang->getLang("A database error occurred when attempting to change your password"));
                 } 
