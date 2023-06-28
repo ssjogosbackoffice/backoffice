@@ -1201,19 +1201,29 @@ function seems_utf8($str) {
 function form_head($action=SELF, $name="", $method="POST", $onsubmit="", $noautocomplete=false, $encType = false) {
 global $page, $header_page, $operation;
 
-if ( ! $action )
+if ( ! isset($action) )
+{
     $action = SELF;
-if ( $name )
+}
+if ( isset($name) )
+{
     $name_str = " name=\"$name\"";
-if ( $onsubmit )
+}
+if ( isset($onsubmit) )
+{
     $onsubmit = " onSubmit=\"$onsubmit\"";
-if ($encType)
+}
+if ( isset($encType) )
+{
     $encType=" enctype=\"$encType\"";
-
-if ( $noautocomplete )
+}
+if ( isset($noautocomplete) )
+{
     $noautocomplete = " autocomplete=\"off\"";
-else
+}   
+else {
     $noautocomplete = "";
+}
 
 ?>
 <form action="<?=$action?>" method="<?=$method?>"<?=$name_str?><?=$onsubmit?><?=$noautocomplete?><?=$encType?>>
