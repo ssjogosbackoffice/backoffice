@@ -1,5 +1,5 @@
-<link rel="stylesheet" type="text/css" href="<?= secure_host ?>/media/bootstrap/css/bootstrap.css" title="core_style" />
-<script src="<?= secure_host ?>/media/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="media/bootstrap/css/bootstrap.css" title="core_style" />
+<script src="media/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <div class="well">
     <div>
         <h2><?=$lang->getLang("Support")?></h2>
