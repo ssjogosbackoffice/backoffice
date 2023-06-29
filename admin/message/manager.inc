@@ -312,8 +312,8 @@ function printMailForm(&$row=null, $reply=false){
 }
 
 $admin_user_id = $_SESSION['admin_id'];
-$action        = $_REQUEST["action"];
-$msg_id        = $_REQUEST["id"];
+$action        = isset($_REQUEST["action"]) ? $_REQUEST["action"] : null;
+$msg_id        = isset($_REQUEST["id"]) ? $_REQUEST["id"] : null;
 
 settype($msg_id, "integer");
 
