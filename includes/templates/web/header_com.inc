@@ -361,7 +361,7 @@ header('Content-type: text/html; charset=UTF-8');
 
                             <td>
                     <?if(MENU_HELP==1){ ?>
-                        <span><a class="small" href="/livehelp"><img src='<?=image_dir?>/help.png'  width='15px'    height='15px' style="vertical-align: bottom" /><?=$lang->getLang('Help')?></a></span>
+                        <span><a class="small" href="index.php?page=message/livehelp"><img src='<?=image_dir?>/help.png'  width='15px'    height='15px' style="vertical-align: bottom" /><?=$lang->getLang('Help')?></a></span>
                     <? } ?>
                  |
                     <a class="small" href="<?=refPage('change-password');?>"><?=$lang->getLang("Change Password")?> </a></td></tr>
