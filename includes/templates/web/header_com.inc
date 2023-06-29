@@ -167,7 +167,7 @@ header('Content-type: text/html; charset=UTF-8');
                                 }
                             }
                         }
-                        if($_REQUEST["page"] != "message/manager"){
+                        if(isset($_REQUEST["page"]) && $_REQUEST["page"] != "message/manager"){
                             if($found == 1){
                                 if(!$_SESSION["just_logged"]){
                                     jAlert("Controlla la lista messaggi, ci sono dei messaggi importanti per te!");
