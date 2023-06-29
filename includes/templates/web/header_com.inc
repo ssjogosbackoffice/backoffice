@@ -337,7 +337,12 @@ header('Content-type: text/html; charset=UTF-8');
                                         <?php if(isLoggedIn()) {
                                         $jurisdiction_credit = getInDollars($_SESSION['jurisdiction_credit']);
                                         $jurisdiction_overdraft = getInDollars($_SESSION['jurisdiction_overdraft']);
-                                        $jurisdiction_overdraft_received = getInDollars($_SESSION['jurisdiction_overdraft_received']);
+                                        if(isset($_SESSION['jurisdiction_overdraft_received']))
+                                        {
+                                            $jurisdiction_overdraft_received =getInDollars($_SESSION['jurisdiction_overdraft_received']);
+                                        }  else {
+                                            $jurisdiction_overdraft_received = getInDollars(null);
+                                        }
                                         $jurisdiction_pending = getInDollars($_SESSION['jurisdiction_pending']);
                                         if (!check_access('view_admin_current_credit', false)) {
                                             $jurisdiction_credit = getInDollars(0);
