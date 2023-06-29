@@ -4,7 +4,7 @@
     <div>
         <h2><?=$lang->getLang("Support")?></h2>
         <h4><?=$lang->getLang("Please complete the form below, and we'll do our best to resolve your problem")?>.</h4>
-        <form id='livehelp' action="/livehelp" method="post">
+        <form id='livehelp' action="" method="post">
             <div>
                 <table>
                     <tr>
