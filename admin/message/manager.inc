@@ -265,7 +265,7 @@ function printMailForm(&$row=null, $reply=false){
           </tr>
           <tr>
               <td>Subject:</td>
-              <td><input size="80" type="text" name="mail[subject]" value="<?=ereg_replace('"', '\"', $row["aum_subject"])?>"/></td>
+              <td><input size="80" type="text" name="mail[subject]" value="<?=preg_replace('/"/', '\"', $row["aum_subject"])?>"/></td>
           </tr>
       <?php endif; ?>
       <tr>
