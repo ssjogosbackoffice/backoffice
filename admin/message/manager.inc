@@ -1,6 +1,6 @@
-<script type="text/javascript" src="/media/nic/nicEdit.js"></script>
-<script src="/media/jquery.multiselect.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="/media/jquery.multiselect.css" title="core_style">
+<script type="text/javascript" src="media/nic/nicEdit.js"></script>
+<script src="media/jquery.multiselect.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="media/jquery.multiselect.css" title="core_style">
 <script type="text/javascript">
     $(function(){
         $("#select").multiselect({selectedList: 100}).multiselectfilter();
@@ -12,14 +12,16 @@
     bkLib.onDomLoaded(
         function(){
             nicEditors.allTextAreas();
-            var jurclass_sel     = document.getElementById("jurisdiction_level");
-            var msg = "";
-            var length  = jurclass_sel.options.length;
-            var removed = 0;
-            for(i = 0 ; i < length ; i++){
-                if(jurclass_sel.options[i - removed].value == "<?=$_SESSION["jurisdiction_class"]?>"){
-                    jurclass_sel.remove(i - removed);
-                    removed++
+            var jurclass_sel = document.getElementById("jurisdiction_level");
+            if (jurclass_sel) {
+                var msg = "";
+                var length = jurclass_sel.options.length;
+                var removed = 0;
+                for (i = 0; i < length; i++) {
+                    if (jurclass_sel.options[i - removed].value == "<?=$_SESSION["jurisdiction_class"]?>") {
+                        jurclass_sel.remove(i - removed);
+                        removed++;
+                    }
                 }
             }
         }
