@@ -262,7 +262,7 @@ function initFunction(){
 }
 function getCredits()
 {
-    $.post("/services/jurisdiction_services.inc",{action:"0"}, function(data){
+    $.post("services/jurisdiction_services.inc",{action:"0"}, function(data){
     credits=data.split('~');
         $("#jurisdiction_credit").fadeOut("slow").fadeIn("slow").empty().append( credits[0]);
         $("#pending_credit").fadeOut("slow").fadeIn("slow").empty().append( credits[1]);
