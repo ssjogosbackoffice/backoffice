@@ -34,9 +34,9 @@ if(defined('DASHBOARD_SHOW_IP')) {
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#1f1f1f',GradientType=0 ); !important;
     }
 </style>
-<link rel="stylesheet" type="text/css" href="<?= secure_host ?>/media/table.css" title="core_style" />
-<link rel="stylesheet" type="text/css" href="<?= secure_host ?>/media/bootstrap/css/bootstrap.css" title="core_style" />
-<script src="<?= secure_host ?>/media/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="media/table.css" title="core_style" />
+<link rel="stylesheet" type="text/css" href="media/bootstrap/css/bootstrap.css" title="core_style" />
+<script src="media/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script>
     $(window).load(function() {
         $("#loadingDiv").fadeOut("slow");
