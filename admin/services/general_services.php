@@ -1,5 +1,5 @@
 <?php
-include_once 'WebRequest.class.inc';
+include_once '../../includes/classes/WebRequest.class.inc';
 require_once 'Mail.php';
 require_once 'Mail/mime.php' ;
 require_once 'configuration/game_functions.inc' ;
