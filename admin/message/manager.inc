@@ -62,7 +62,7 @@
     function getplayerslike(){
         player=$('#player_username').val();
         if(player.length>3){
-            $.post("services/general_services.php",{action:'1',player:player}, function(data){
+            $.post("services/general_services.inc",{action:'1',player:player}, function(data){
                 $('#select_div').show();
                 dataobj=data.split(",");
                 $.each(dataobj, function (index, value) {
