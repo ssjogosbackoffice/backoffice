@@ -1,5 +1,5 @@
 <?php
-require_once 'Structure.class.inc';
+require_once '../../includes/classes/Structure.class.inc';
 function getSkins() {
 	global $dbh;
 	$sql = "Select * from skins";

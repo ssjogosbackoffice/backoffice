@@ -1,10 +1,10 @@
 <?php
 include_once '../../includes/classes/WebRequest.class.inc';
-require_once 'Mail.php';
-require_once 'Mail/mime.php' ;
-require_once 'configuration/game_functions.inc' ;
-require_once 'configuration/skins_functions.inc' ;
-require_once 'Skin.class.inc';
+require_once '../../vendor/pear/mail/Mail.php';
+// require_once 'Mail/mime.php' ;
+require_once '../configuration/game_functions.inc' ;
+require_once '../configuration/skins_functions.inc' ;
+require_once '../../includes/classes/Skin.class.inc';
 
 if (isset($_GET['mp'])){
     $file = "../../cache/documents/".$_GET['mp'].".xls";
