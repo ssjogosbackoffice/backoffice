@@ -5,7 +5,7 @@
  * Class Skin
  */
 
-include_once 'Logger.php';
+require_once '../../includes/php/Logger.php';
 class Skin{
     public $jurisdiction,$games;
     public $defaultMenuParams=array('home' => array('id' => 'Home',
