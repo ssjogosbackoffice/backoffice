@@ -120,7 +120,7 @@ define('temp_download_url','/temp');
 
 // DEFAULT is https://, i changed because i was having ssl errors
 define('nonsecure_host',    "http://".HOST);
-define('secure_host',     nonsecure_host);
+define('secure_host',     nonsecure_host."/backoffice/admin");
 
 define ( 'SECURITY_PID', 'SECURITY_PID_ADMIN' );
 define("MEMSERVERCACHE", '127.0.0.1');
