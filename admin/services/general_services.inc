@@ -1,4 +1,5 @@
 <?php
+require_once '../../config/backoffice.conf.inc';
 include_once '../../includes/classes/WebRequest.class.inc';
 require_once '../../vendor/pear/mail/Mail.php';
 // require_once 'Mail/mime.php' ;

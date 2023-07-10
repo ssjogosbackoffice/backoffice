@@ -64,16 +64,22 @@
         if(player.length>3){
             $.post("services/general_services.inc",{action:'1',player:player}, function(data){
                 $('#select_div').show();
+
                 dataobj=data.split(",");
                 $.each(dataobj, function (index, value) {
                     values=value.split(";");
-                    if ($('#select option[value='+values[0]+']').length === 0 ){ //value does not exist so add
-                        $('#select').append($('<option>', {
-                            value: values[0],
-                            text: values[1]
-                        }));
+
+                    optionValue = values[0].trim();
+                    if(optionValue != '') {
+                        if ($('#select option[value='+optionValue+']').length === 0){ //value does not exist so add
+                            $('#select').append($('<option>', {
+                                value: optionValue,
+                                text: values[1]
+                            }));
+                        }
                     }
                 });
+                
                 $("#select").multiselect("open");
                 $('#select').multiselect('refresh').multiselectfilter();
             });

@@ -398,7 +398,11 @@ class DatabaseHandler {
         }
         //Do query
         $rs = $this->exec($sql);
-        file_put_contents($file_path, serialize($rs->Records));
+        if(file_exists($file_path))
+        {
+            file_put_contents($file_path, serialize($rs->Records));
+
+        }
         return $rs;
     }
 

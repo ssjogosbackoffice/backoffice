@@ -1,6 +1,6 @@
 <?php
 header("P3P: CP=\"CAO PSA OUR\"");
-define('WEB_ROOT',     realpath(dirname(__FILE__).'/../'));
+define('WEB_ROOT',     $_SERVER['DOCUMENT_ROOT'] . "/backoffice");
 define('WEB_CONFIG',   WEB_ROOT . '/config');
 define('WEB_INCLUDES', WEB_ROOT . '/includes');
 define('LANGUAGES_PATH', WEB_ROOT . '/languages');
