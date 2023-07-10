@@ -143,7 +143,7 @@ else {
 }*/
 define('common_image_dir',  "/media/images");
 // DEFAULT: define('image_dir',         "/media/images");
-define('image_dir',         "media/images");
+define('image_dir',         "/backoffice/admin/media/images");
 
 $site_avail_langs = array('English'  => 'EN',   // Italiano
     'Italiano' => 'IT',   // English
