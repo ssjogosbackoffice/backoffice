@@ -178,7 +178,7 @@
               $str .= '<option value=""> - ' . $option_one .'- </option>';
    	          foreach ( $options as $key => $arr ){
    	  	        $selected = '';
-   	  	        if ( $_POST['jurisdiction'] == $arr['id'] || $selected_id == $arr['id'] ){
+   	  	        if ( (isset($_POST['jurisdiction']) && $_POST['jurisdiction'] == $arr['id']) || $selected_id == $arr['id'] ){
    	  	   	      $selected = 'selected';
    	  	        }
    	   	        $str .=  '<option value="' . $arr['id']  .  '"' . $selected . '>' . str_replace("'", "\'", $arr['name']) . '</option>';
