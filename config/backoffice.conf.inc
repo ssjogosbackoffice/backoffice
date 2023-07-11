@@ -118,8 +118,7 @@ define('log_dir',        WEB_LOG);
 define('cache_file_dir', WEB_ROOT.'/cache');
 define('temp_download_url','/temp');
 
-// DEFAULT is https://, i changed because i was having ssl errors
-define('nonsecure_host',    "http://".HOST);
+define('nonsecure_host',    "https://".HOST);
 define('secure_host',     nonsecure_host."/backoffice/admin");
 
 define ( 'SECURITY_PID', 'SECURITY_PID_ADMIN' );
