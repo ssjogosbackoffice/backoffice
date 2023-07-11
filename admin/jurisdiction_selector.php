@@ -52,8 +52,12 @@
       </td>
 	  <td>
 	    <div id="jurisdiction_select" class="content">
-          <?= get_jurisdiction_select(getPostGetVar('jurisdiction_level'), $jurisdiction_id);?>
-        </div>
+        <?php
+          if(isset($jurisdiction_id)) {
+            echo get_jurisdiction_select(getPostGetVar('jurisdiction_level'), $jurisdiction_id);
+          }
+        ?>
+      </div>
       </td>
     </tr>
   </table>
