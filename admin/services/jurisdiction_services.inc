@@ -1,5 +1,6 @@
 <?php
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/backoffice/includes/funclib/general_functions.inc';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/backoffice/config/backoffice.conf.inc';
 
 if(isset($_GET['action'])){
     switch ($_GET['action']){
