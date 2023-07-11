@@ -20,10 +20,10 @@
   }
 ?>
 
-<select id="jurisdiction_level" name="jurisdiction_level" onChange="change_jurisdiction(this)" <?=$disabled?>>
+<select id="jurisdiction_level" name="jurisdiction_level" onChange="change_jurisdiction(this)" <?php if(isset($disabled)){ echo $disabled; } ?>>
 
 <?php if ('casino' == $_SESSION['jurisdiction_class'] || 'nation' == $_SESSION['jurisdiction_class'] ) : ?>
-<?php ?>//if ('casino' == $_SESSION['jurisdiction_class']) : ?>
+<?php ?>
         <option value=""> - All Jurisdictions - </option>
 <?php endif; ?>
 
@@ -32,7 +32,7 @@
 <?php endif; ?>
 
 <?php if ( 'casino' == $_SESSION['jurisdiction_class'] || 'nation' == $_SESSION['jurisdiction_class']) : ?>
-<?php ?>//if ( 'casino' == $_SESSION['jurisdiction_class']) : ?>
+<?php ?>
         <option value="nation"<?if ( isset($jurisdiction_level) && 'nation' == $jurisdiction_level ) echo 'selected="selected"'; ?>>National </option>
 <?php endif; ?>
 
