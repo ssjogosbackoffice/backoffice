@@ -1,5 +1,5 @@
 <?php
-define('MEMCACHED_SERVERS', "/srv/web/backoffice/config/memcached.servers");
+// define('MEMCACHED_SERVERS', "/srv/web/backoffice/config/memcached.servers");
 //define('MEMCACHED_SERVERS', "/srv/casino/htdocs/backoffice/config/memcached.servers");
 require_once(dirname(__FILE__).'/cache_wrapper_memcache.inc.php');
 //echo implode("<br/>", $_SESSION["access"]);
