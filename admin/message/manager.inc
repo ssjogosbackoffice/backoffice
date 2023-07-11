@@ -245,9 +245,11 @@ function printMailForm(&$row=null, $reply=false){
                       <input type="checkbox" name='jurisdiction_affiliates'><?=$lang->getLang("Affiliates")?>
                       <br>
                       <?php
-                      $jurisdiction_level    = $rs["jur_class"];
-                      $jurisdiction          = $rs["prm_jur_id"];
-                      $_POST['jurisdiction'] = $jurisdiction;
+                      if(isset($rs)) {
+                        $jurisdiction_level    = $rs["jur_class"];
+                        $jurisdiction          = $rs["prm_jur_id"];
+                        $_POST['jurisdiction'] = $jurisdiction;
+                      }
                       if ( 'casino'   == $_SESSION['jurisdiction_class'] ||
                           'region'   == $_SESSION['jurisdiction_class'] ||
                           'district' == $_SESSION['jurisdiction_class'] ||
