@@ -393,7 +393,7 @@ switch($action){
         foreach($request as $k => $r){
             $request[$k] = trim($r);
         }
-        if($_POST['sendto']=='players'){
+        if(isset($_POST['sendto']) && $_POST['sendto']=='players'){
             if(count($_POST['playersto'])<1){
                 addError("", $lang->getLang("Please choose at least one player"));
             }
@@ -417,11 +417,15 @@ switch($action){
         }
         }
         else{
-        $to          = $request["to"];
+        if(isset($request["to"])) {
+            $to = $request["to"];
+        }
         settype($to, "integer");
         $new_email   = ($request["new"] == "true");
         $jur_class   = $_POST["jurisdiction_level"];
-        $jur_id      = $_POST["jurisdiction"];
+        if(isset($_POST["jurisdiction"])) {
+            $jur_id = $_POST["jurisdiction"];
+        }
         $priority    = $request["priority"];
 
         settype($priority, "integer");
