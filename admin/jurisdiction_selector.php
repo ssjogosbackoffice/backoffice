@@ -28,26 +28,26 @@
 <?php endif; ?>
 
 <?php if ('casino' == $_SESSION['jurisdiction_class']) : ?>
-        <option value="casino"<?if ( 'casino' == $jurisdiction_level ) echo 'selected="selected"'; ?>>Casino</option>
+        <option value="casino"<?if ( isset($jurisdiction_level) && 'casino' == $jurisdiction_level ) echo 'selected="selected"'; ?>>Casino</option>
 <?php endif; ?>
 
 <?php if ( 'casino' == $_SESSION['jurisdiction_class'] || 'nation' == $_SESSION['jurisdiction_class']) : ?>
 <?php ?>//if ( 'casino' == $_SESSION['jurisdiction_class']) : ?>
-        <option value="nation"<?if ( 'nation' == $jurisdiction_level ) echo 'selected="selected"'; ?>>National </option>
+        <option value="nation"<?if ( isset($jurisdiction_level) && 'nation' == $jurisdiction_level ) echo 'selected="selected"'; ?>>National </option>
 <?php endif; ?>
 
 <?php if ('casino' == $_SESSION['jurisdiction_class'] || 'nation' == $_SESSION['jurisdiction_class'] || 'region' == $_SESSION['jurisdiction_class'] ) : ?>
-<option value="region" <?php if ('region' == $jurisdiction_level) echo 'selected="selected"'; ?>>Region</option>
+<option value="region" <?php if ( isset($jurisdiction_level) && 'region' == $jurisdiction_level ) echo 'selected="selected"'; ?>>Region</option>
 <?php endif; ?>
 
 <?php if ('casino' == $_SESSION['jurisdiction_class'] || 'nation' == $_SESSION['jurisdiction_class'] || 'region' == $_SESSION['jurisdiction_class'] || 'district' == $_SESSION['jurisdiction_class']) : ?>
-<option value="district" <?php if ('district' == $jurisdiction_level) echo 'selected="selected"'; ?>>District</option>
+<option value="district" <?php if ( isset($jurisdiction_level) && 'district' == $jurisdiction_level ) echo 'selected="selected"'; ?>>District</option>
 <?php endif; ?>
 
 <?php if ( 'district' == $_SESSION['jurisdiction_class'] ) : ?>
         <option value=""> - All clubs - </option>		
 <?php endif; ?>
-        <option value="club"<?if ( 'club' == $jurisdiction_level ) echo 'selected="selected"'; ?>>Club</option>
+        <option value="club"<?if ( isset($jurisdiction_level) && 'club' == $jurisdiction_level ) echo 'selected="selected"'; ?>>Club</option>
   </select>
       </td>
 	  <td>
