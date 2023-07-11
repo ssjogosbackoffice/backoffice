@@ -433,7 +433,7 @@ if ( ! class_exists('JurisdictionsList' )){
                 if ( $num_rows > 0 ) {
                     while ($row= $rs->next()) {
                         $class    = $row['jur_class'];
-                        if(!is_array($cached_list[$class])){
+                        if(!array_key_exists($class, $cached_list)){
                             $cached_list[$class] = array();
                         }
                         array_push($cached_list[$class], array('id' => $row['jur_id'],'code' => $row["jur_code"], 'vat_code' => $row["jur_vat_code"], 'class' => $row['jur_class'], 'name'=> $row['jur_name'], 'parent_id' => $row['jur_parent_id'], 'date' => strtotime($row['jur_creation_date']), 'jur_status' => $row['jur_status']));
