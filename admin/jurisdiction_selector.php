@@ -12,10 +12,12 @@
     <tr>
       <td>
 <?php
-  if ( 'region' == $report_type || 'district' == $report_type || 'club' == $report_type ){   
+  // if ( 'region' == $report_type || 'district' == $report_type || 'club' == $report_type ){   
        	//$disabled = 'disabled="disabled"';
-  } 
-  $jurisdiction_level = $_POST["jurisdiction_level"];
+  // } 
+  if(isset($_POST["jurisdiction_level"])) {
+    $jurisdiction_level = $_POST["jurisdiction_level"];
+  }
 ?>
 
 <select id="jurisdiction_level" name="jurisdiction_level" onChange="change_jurisdiction(this)" <?=$disabled?>>
