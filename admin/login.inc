@@ -378,7 +378,7 @@ if ($isExternalSystem == 'false') {
                 <tr>
     				<td class=label><?=$lang->getLang("Username")?>:</td>
     				<td class=content><input type="password" size="14"
-    					name="admin_username" value="<?=$admin_username;?>"></td>
+    					name="admin_username" value="<?php if(isset($admin_username)){ echo $admin_username; };?>"></td>
     			</tr>
     			<tr>
     				<td class=label><?=$lang->getLang("Password")?>:</td>
