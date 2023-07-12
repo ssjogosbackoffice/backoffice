@@ -48,7 +48,9 @@ if (isset($_POST['do_login']) && $_POST['do_login'] == 'yes') {
         } else {
             $admin_username = addslashes($_POST['admin_username']);
             $admin_password = $_POST['admin_password'];
-            $captcha_code = strtolower($_POST['captcha_code']);
+            if(isset($_POST['captcha_code'])) {
+                $captcha_code = strtolower($_POST['captcha_code']);
+            }
             if (! fieldsBlank($admin_username, $admin_password)) {
                 // $filename = log_dir . "/access_log.csv";
                 // if (! file_exists($filename)) {
