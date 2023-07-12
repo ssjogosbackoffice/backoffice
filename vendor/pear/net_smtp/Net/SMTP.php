@@ -37,7 +37,7 @@
 // +----------------------------------------------------------------------+
 
 require_once 'PEAR.php';
-require_once 'Net/Socket.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/backoffice/vendor/pear/net_socket/Net/Socket.php';
 
 /**
  * Provides an implementation of the SMTP protocol using PEAR's

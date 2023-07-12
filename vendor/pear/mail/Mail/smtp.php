@@ -383,7 +383,7 @@ class Mail_smtp extends Mail {
             return $this->_smtp;
         }
 
-        include_once 'Net/SMTP.php';
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/backoffice/vendor/pear/net_smtp/Net/SMTP.php';
         $this->_smtp = new Net_SMTP($this->host,
                                      $this->port,
                                      $this->localhost,
