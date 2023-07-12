@@ -1,5 +1,6 @@
 {
     "require": {
-        "pear/mail": "^1.5"
+        "pear/mail": "^1.5",
+        "pear/net_smtp": "^1.10"
     }
 }

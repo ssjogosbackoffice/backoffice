@@ -7,6 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit462758958bf076fe639474b5eca46d66
 {
     public static $prefixesPsr0 = array (
+        'N' => 
+        array (
+            'Net' => 
+            array (
+                0 => __DIR__ . '/..' . '/pear/net_socket',
+                1 => __DIR__ . '/..' . '/pear/net_smtp',
+            ),
+        ),
         'M' => 
         array (
             'Mail' => 

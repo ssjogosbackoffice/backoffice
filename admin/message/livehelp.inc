@@ -66,7 +66,7 @@
 
 <?php
     if(isset($_POST['subject'])){
-        require_once("Mail.php");
+        require_once $_SERVER['DOCUMENT_ROOT'] . "/backoffice/vendor/pear/mail/Mail.php";
         $from = $_POST['email'];
         $to = "marian@rgfairplay.com";
         $subject="[".$_POST['help_category']."]";
