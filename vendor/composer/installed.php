@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '8c45e7b91246a0b38f6e0dfa7bb0851bdacb7cc3',
+        'reference' => '2ea8fbf649794c8c46f36d9aaa6d37e270a9ac5a',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '8c45e7b91246a0b38f6e0dfa7bb0851bdacb7cc3',
+            'reference' => '2ea8fbf649794c8c46f36d9aaa6d37e270a9ac5a',
             'dev_requirement' => false,
         ),
         'pear/console_getopt' => array(
